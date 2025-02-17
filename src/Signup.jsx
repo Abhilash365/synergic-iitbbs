@@ -15,7 +15,7 @@ function Signup() {
         if (credentials.password !== credentials.cpassword) {
             alert("Passwords do not match!");
         } else {
-            const response = await fetch("http://localhost:5000/api/createUser", {
+            const response = await fetch("https://synergic-iitbbs-backend.onrender.com/api/createUser", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username: credentials.username, password: credentials.password })

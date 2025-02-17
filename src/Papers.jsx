@@ -27,7 +27,7 @@ function Papers() {
     setLoading(true); // Start loading animation
   
     try {
-      const response = await fetch(`http://localhost:5000/subjects/${branch}/${selected}`);
+      const response = await fetch(`https://synergic-iitbbs-backend.onrender.com/subjects/${branch}/${selected}`);
   
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);

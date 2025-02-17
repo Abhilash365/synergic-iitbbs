@@ -13,7 +13,7 @@ function Login({ setAuth }) {  // Accept setAuth as a prop
       setLoading(true);
 
         e.preventDefault();
-        const response = await fetch("http://localhost:5000/api/loginUser", {
+        const response = await fetch("https://synergic-iitbbs-backend.onrender.com/api/loginUser", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: credentials.username, password: credentials.password })

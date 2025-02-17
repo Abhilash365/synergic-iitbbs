@@ -11,7 +11,7 @@ const QuestionPapers = () => {
   useEffect(() => {
     console.log(`📢 Fetching question papers for subject: ${subject}`);
 
-    fetch(`http://localhost:5000/questionpapers/${subject}`)
+    fetch(`https://synergic-iitbbs-backend.onrender.com/questionpapers/${subject}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
