@@ -1,0 +1,176 @@
+.start {
+  /* min-height: 100vh; */
+  /* padding: 2rem; */
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+}
+
+.heading {
+  height: 5rem;
+  margin: 2rem;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.syn_text {
+  font-family: outfit;
+  font-weight: 700;
+  font-size: 60px;
+  text-transform: capitalize;
+  color: #114A6E;
+}
+
+.signup:hover {
+  cursor: pointer;
+}
+
+.logo {
+  width: 12rem;
+}
+
+.logo_img {
+  margin-left: 10px;
+  width: 193px;
+  height: 221px;
+  display: flex;
+  gap: 0px;
+  opacity: 0px;
+}
+
+.signup_text {
+  font-size: 2rem;
+  margin: 0 2rem;
+  text-align: center;
+  font-family: outfit;
+  font-weight: 600;
+  color: #000000;
+}
+
+/* Parent container */
+.input_container {
+  overflow: hidden;
+  border: 1px solid black;
+border-radius: 10px;
+margin: 10px;
+  width: 60%;
+  height: 40%;
+  padding: 20px;
+ 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.signIn{
+  text-align: center;
+  width: 100%;
+  margin: 5vh;
+  /* background: red; */
+}
+
+.username{
+  /* background: red; */
+  margin-bottom:  10px;
+  height:5vh;
+  width: 96%;
+}
+/* Input box without background color */
+.input_box1 {
+  /* position: relative; */
+  margin: 3% 0;
+  width: 100%;
+  height: 100%;
+  /* background: red; */
+  border: 1.2px solid rgba(0, 0, 0, 0.216);
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 18px;
+  margin: 0 10px;
+  outline: none;
+  background: none; /* Removed background */
+}
+
+.password{
+  /* background: red; */
+  height:5vh;
+  width: 60vw;
+  /* margin-bottom:  5%; */
+}
+.input_box2 {
+  /* padding: 50px; */
+  /* position: relative; */
+  margin: 3% 0;
+  width: 100%;
+  height: 100%;
+  /* background: red; */
+  border: 1.2px solid rgba(0, 0, 0, 0.216);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 0 10px;
+  font-size: 18px;
+  outline: none;
+  background: none; /* Removed background */
+}
+
+/* Placeholder text */
+.input_box::placeholder {
+  font-family: outfit;
+  font-weight: 400;
+  font-size: 18px;
+  color: #3D3D3E;
+}
+
+/* Label inside the parent, positioned above input */
+.input_label {
+  position: absolute;
+  top: -20px;
+  left: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: black; /* Default text color */
+}
+
+.us_input {
+  padding: 10px;
+}
+
+.signup_btn:focus {
+  border-color: rgba(0, 0, 0, 0.4);
+}
+
+.input_box:focus {
+  border-color: rgba(0, 0, 0, 0.4);
+}
+
+.input_box:active {
+  border-color: rgba(0, 0, 0, 0.7);
+  outline: none;
+}
+
+.last_text {
+  display: flex;
+  margin: 30px;
+  justify-content: space-evenly;
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.account {
+  color: #626263;
+  font-size: 18px;
+  font-family: outfit;
+}
+
+.signup {
+  color: #4A9DDA;
+  font-size: 18px;
+  font-family: outfit;
+}
+
+
+

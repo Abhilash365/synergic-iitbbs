@@ -1,0 +1,134 @@
+/* Navigation Dropdown Styling */
+.NavDrop {
+  height: 70px;
+  padding-left: 10%;
+  padding-right: 10%;
+  display: flex;
+  align-items: center;
+  /* justify-content: ; */
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  z-index: 10; 
+  /* background-color: rebeccapurple;*/
+} 
+/* .NavDrop{
+  height: 70px;
+  padding-left: 10%;
+  padding-right: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+} */
+/* Dropdown Styling */
+.dropdown {
+  width: 30%;
+  height: 60%;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 0.4px solid #363535;
+  margin: 5px;
+  text-align: center;
+  flex-grow: 1;
+  font-size: 18px; /* Default for desktop */
+}
+
+select option:hover {
+  background-color: #7adb34;
+  color: rgb(0, 0, 0);
+}
+
+/* Find Button Styling */
+.paper_find {
+  width: 25%;
+  height: 60%;
+  background-color: #FF7F00;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: center;
+  position: relative; 
+  z-index: 1;/* Ensures loading animation is visible */
+}
+
+.paper_find:hover {
+  background-color: #ff6600;
+}
+
+.paper_find:disabled {
+  cursor: not-allowed;
+  background-color: #ff6600;
+}
+
+/* Loader effect */
+.paper_find.loading::after {
+  content: "";
+  display: block;
+  width: 18px;
+  height: 18px;
+  border: 3px solid transparent;
+  border-top-color: white;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  animation: spin 0.8s linear infinite;
+  visibility: visible;
+}
+
+/* Keyframes for rotating effect */
+@keyframes spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Main Layout */
+.main56 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Card Styling */
+.card {
+  width: 100%;
+  max-width: clamp(250px, 30vw, 300px);
+}
+
+/* MOBILE FIXES */
+@media (max-width: 768px) {
+  .NavDrop {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 40px;
+  }
+
+  .dropdown {
+    width: 32%;
+    font-size: 12px; /* Reduced font size to prevent overflow */
+    padding: 5px;
+  }
+
+  .paper_find {
+    width: 28%; /* Adjusted width to fit horizontally */
+    font-size: 14px; /* Slightly smaller button text */
+    padding: 8px;
+  }
+
+  .main56 {
+    gap: 15px;
+  }
+}

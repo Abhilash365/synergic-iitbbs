@@ -1,0 +1,29 @@
+.heading5{
+    margin: 100px auto;
+    width: 500px;
+    height: 39px;
+    
+    gap: 0px;
+    opacity: 0px;
+  
+    font-family: DM Sans;
+font-size: 40px;
+color:#45474B;
+
+font-weight: 500;
+line-height: 39.06px;
+text-align: center;
+text-underline-position: from-font;
+text-decoration-skip-ink: none;
+
+}
+
+
+.img7{
+   margin: auto;
+  
+    height: 300px;
+}
+.sp{
+    text-align: center;
+}

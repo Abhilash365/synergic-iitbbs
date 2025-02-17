@@ -1,0 +1,131 @@
+.start{
+    /* background-color: rgb(226, 45, 45); */
+    height: 100vh;
+    max-width: 100vw;
+display: flex;
+flex-direction: column;
+align-items: center;
+
+/* flex-wrap; */
+}
+
+.heading{
+height: 5rem;
+/* background-color: rgb(196, 196, 196); */
+margin: 2rem;
+/* margin-bottom: 5%; */
+width: 80%;
+display: flex;
+justify-content: center;
+align-items: center;
+
+}
+
+.syn_text{
+    font-family: outfit;
+font-weight: 700;
+font-size: 60px;
+text-transform: capitalize;
+color: #114A6E;
+}
+
+.logo{
+    height: 70px;
+    width: 4rem;
+    /* background-color: red; */
+    /* background-color: black; */
+}
+
+/* .logo_img{
+height: 300%;
+width: 300%;
+background: blue;
+} */
+
+.signup_text{
+    font-size: 3rem;
+    margin: 0 2rem;
+    text-align: center;
+    font-family: outfit;
+    font-weight: 600;
+    font-size: 45px;
+    /* background-color: gray; */
+    color: #000000;
+}
+
+.input{
+    margin:  2rem;
+    display: flex;
+    /* max-width: 50vw; */
+    flex-direction: column;
+  /* background: rebeccapurple; */
+  /* outline: none; */
+}
+
+.input_box{
+    margin: 3% 0;
+    width: 600px;
+
+border: 1.2px solid rgba(0, 0, 0, 0.216);
+border-radius: 5px;
+    /* background-color: antiquewhite; */
+    height: 45px;
+    padding: 10px;
+    border-radius: 5px;
+    outline: none;
+}
+
+.input_box::placeholder{
+    font-family: outfit;
+    font-weight: 400;
+    font-size: 18px;
+    color: #3D3D3E
+}
+        
+.signup_btn{
+    background-color: #F4CE14;
+    height: 50px;
+    width: 600px;
+    border: 1px solid rgba(107, 107, 107, 0.377);
+    border-radius: 8px;
+    outline: none;
+    font-size: 25px;
+    font-weight:  600;
+}
+
+
+.signup_btn:focus {
+    border-color: rgba(0, 0, 0, 0.4); 
+  }
+  .input_box:focus {
+    border-color: rgba(0, 0, 0, 0.4); 
+  }
+
+  .input_box:active {
+
+    border-color: rgba(0, 0, 0, 0.7);
+    outline: none;
+  }
+
+
+  .last_text{
+    display: flex;
+    margin: 30px;
+    justify-content:space-evenly;
+    width: 600px;
+  }
+
+  .account{
+    color:#626263 ;
+    font-size: 18px;
+    font-family: outfit;
+    font-size: 400;
+    /* background-color: red; */
+  }
+
+  .signup{
+    color: #4A9DDA;
+    font-size: 18px;
+    font-family: outfit;
+    font-size: 400;
+  }

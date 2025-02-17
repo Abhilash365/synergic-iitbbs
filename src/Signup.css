@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400;600;700&display=swap');
+
+.start{
+    /* background-color: rgb(226, 45, 45); */
+    height: 100vh;
+    max-width: 100vw;
+display: flex;
+flex-direction: column;
+align-items: center;
+
+/* flex-wrap; */
+}
+
+.heading{
+height: 10rem;
+display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+
+.syn_text{
+    font-family: 'Outfit', sans-serif;
+font-weight: 500;
+font-size: 60px;
+text-transform: capitalize;
+color: #114A6E;
+}
+.heading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.heading img {
+  height: 120px;
+  width: auto; /* Maintains aspect ratio */
+  margin-left: 25px;
+}
+
+
+/* .logo_img{
+height: 300%;
+width: 300%;
+background: blue;
+} */
+
+.signup_text{
+    font-size: 3rem;
+    margin: 0 1rem;
+    text-align: center;
+    font-family: outfit;
+    font-weight: 600;
+    font-size: 45px;
+    /* background-color: gray; */
+    color: #000000;
+}
+
+.input{
+    margin:  2rem;
+    display: flex;
+    /* max-width: 50vw; */
+    flex-direction: column;
+  /* background: rebeccapurple; */
+  /* outline: none; */
+}
+
+.input_box{
+    margin: 3% 0;
+    width: 600px;
+
+border: 1.2px solid rgba(0, 0, 0, 0.216);
+border-radius: 5px;
+    /* background-color: antiquewhite; */
+    height: 30px;
+    padding: 10px;
+    border-radius: 5px;
+    outline: none;
+}
+
+.input_box::placeholder{
+    font-family: outfit;
+    font-weight: 400;
+    font-size: 18px;
+    color: #3D3D3E;
+    opacity: 80%;
+}
+        
+.signup_btn{
+    background-color: #F4CE14;
+    height: 50px;
+    width: 620px;
+    border-radius: 8px;
+    outline: none;
+    font-size: 25px;
+    font-weight:  600;
+    cursor: pointer;
+    padding: 10px;
+    margin-left: 30px;
+}
+
+
+.signup_btn:focus {
+    border-color: rgba(0, 0, 0, 0.4); 
+  }
+  .input_box:focus {
+    border-color: rgba(0, 0, 0, 0.4); 
+  }
+
+  .input_box:active {
+
+    border-color: rgba(0, 0, 0, 0.7);
+    outline: none;
+  }
+
+
+  .last_text{
+    display: flex;
+    margin: 30px;
+    justify-content:space-evenly;
+    width: 600px;
+  }
+
+  .account{
+    color:#626263 ;
+    font-size: 18px;
+    font-family: outfit;
+    font-size: 400;
+    /* background-color: red; */
+  }
+
+  .signup{
+    color: #4A9DDA;
+    font-size: 18px;
+    font-family: outfit;
+    font-size: 400;
+  }
+  .signup:hover{
+    cursor: pointer;
+    color: #0597ff;
+  }
+

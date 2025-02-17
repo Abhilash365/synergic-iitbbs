@@ -1,0 +1,124 @@
+/* Login Form Styling */
+.login-container {
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh; /* Full viewport height */
+    margin: 0;
+ 
+    background: #f9f6f2;
+}
+
+.login-box {
+   
+    width: 350px;
+    padding: 2rem;
+    border-radius: 10px;
+    background-color: #2d3748;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #f3f4f6;
+    text-align: center;
+}
+
+.login-header {
+    margin-bottom: 1.5rem;
+}
+
+.logo {
+        
+        height: 10rem;
+        display: flex;
+          justify-content: center;
+          align-items: center;
+}
+.logo img {
+    height: 120px;
+    width: auto; /* Maintains aspect ratio */
+    /* margin-left: 25px; */
+  }
+.login-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.login-form {
+   
+   /* background-color: rebeccapurple; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+}
+
+.input-wrapper {
+    margin-bottom: 1rem;
+}
+
+.login-input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #4a5568;
+    background-color: #fbfdf3;
+    color: #2d3748;
+    font-size: 1rem;
+    outline: none;
+}
+
+.login-input:focus {
+    border-color: #a78bfa;
+    box-shadow: 0 0 5px rgba(167, 139, 250, 0.5);
+}
+
+.login-button {
+    /* width: 100%; */
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #F4CE14;
+    color: #114A6E;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #eacf49;
+}
+
+.login-footer {
+    margin-top: 1rem;
+}
+
+.forgot-password {
+    color: #cbd5e1;
+    font-size: 0.875rem;
+    text-decoration: none;
+}
+
+.signup:hover {
+    text-decoration: underline;
+}
+
+.signup{
+    font-size: 1.2rem;
+}
+
+.account{
+    text-decoration: none;
+}
+
+.login-button:disabled {
+    background-color: #eacf49; /* Slightly faded */
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.login-button:disabled::after {
+    content: "⏳"; /* Loading icon */
+    margin-left: 8px;
+}
