@@ -22,7 +22,7 @@ export default function App() {
   return (
     <Routes>
       {/* Public Routes */}
-      <Route path="/signin" element={<Login setAuth={setIsAuthenticated} />} />
+      <Route path="/" element={<Login setAuth={setIsAuthenticated} />} />
       <Route path="/signup" element={<Signup />} />
 
       {/* Private Routes - With Navbar */}
@@ -43,7 +43,7 @@ export default function App() {
           }
         />
       ) : (
-        <Route path="*" element={<Navigate to="/signin" />} />
+        <Route path="*" element={<Navigate to="/" />} />
       )}
     </Routes>
   );
