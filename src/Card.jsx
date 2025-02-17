@@ -5,7 +5,7 @@ import eceImg from './ec.png';
 import eeImg from './ee.png';
 import meImg from './me.png';
 import mmImg from './mm.jpg';
-import ceImg from './ce.png';
+import ceImg from './Ce.png'
 import epImg from './ep.jpg';
 import othersImg from './others.jpg'; // Default fallback image
 
