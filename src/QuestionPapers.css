@@ -48,7 +48,7 @@ body {
     background: #fce813; /* Button background color */
     border: none;
     border-radius: 5px;
-    color: white;
+    color: rgb(0, 0, 0);
     cursor: pointer;
     text-align: center;
     display: block;
