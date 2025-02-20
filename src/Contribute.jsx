@@ -105,7 +105,7 @@ export default function Contribute() {
 
                     <select name="semester" onChange={handleChange} value={formData.semester} className="dropdownsss">
                         <option value="">Semester</option>
-                        {["Chemistry-Semester", "Physics-Semester", "Semester_3", "Semester_4", "Semester_5", "Semester_6", "Semester_7", "Semester_8"].map((sem) => (
+                        {["chemistry-Semester", "Physics-Semester", "Semester_3", "Semester_4", "Semester_5", "Semester_6", "Semester_7", "Semester_8"].map((sem) => (
                             <option key={sem} value={sem}>{sem}</option>
                         ))}
                     </select>
