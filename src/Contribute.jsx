@@ -14,7 +14,9 @@ export default function Contribute() {
         branch: "",
         semester: "",
         subject: "",
+        contributorName: "", // ✅ New field for contributor's name
     });
+
     const [isLoading, setIsLoading] = useState(false);
     const [filteredSubjects, setFilteredSubjects] = useState([]);
 
@@ -36,54 +38,67 @@ export default function Contribute() {
     const handleFileChange = (event) => setFile(event.target.files[0]);
 
     const handleDragOver = (event) => event.preventDefault();
+
     const handleDrop = (event) => {
         event.preventDefault();
         setFile(event.dataTransfer.files[0]);
     };
 
     const handleUpload = async () => {
-    setIsLoading(true); // Start loading
+        setIsLoading(true);
 
-    const { year, branch, semester, subject } = formData;
+        const { year, branch, semester, subject, contributorName } = formData;
 
-    if (!file || !year || !branch || !semester || !subject) {
-        setMessage("⚠ Please fill all fields and select a file.");
-        setIsLoading(false);
-        return;
-    }
-
-    const formattedSubject = subject.replace(/\s+/g, "_");
-    const formDataToSend = new FormData();
-    formDataToSend.append("file", file);
-    formDataToSend.append("year", year);
-    formDataToSend.append("branch", branch);
-    formDataToSend.append("semester", semester);
-    formDataToSend.append("subject", formattedSubject);
-
-    try {
-        const response = await axios.post("https://synergic-iitbbs-backend.onrender.com/upload", formDataToSend, {
-            headers: { "Content-Type": "multipart/form-data" },
-        });
-
-        if (response.data.success) {
-            setMessage("✅ File uploaded successfully!");
-            setFileUrl(response.data.link);
-        } else {
-            setMessage(`❌ Upload failed: ${response.data.error || "Unknown error."}`);
+        if (!file || !year || !branch || !semester || !subject || !contributorName) {
+            setMessage("⚠ Please fill all fields including your name and select a file.");
+            setIsLoading(false);
+            return;
         }
-    } catch (error) {
-        console.error("Upload Error:", error);
-        setMessage(error.response?.data?.error || "❌ Unexpected error occurred.");
-    } finally {
-        setIsLoading(false); // Stop loading
-    }
-};
+
+        const formattedSubject = subject.replace(/\s+/g, "_");
+        const formDataToSend = new FormData();
+        formDataToSend.append("file", file);
+        formDataToSend.append("year", year);
+        formDataToSend.append("branch", branch);
+        formDataToSend.append("semester", semester);
+        formDataToSend.append("subject", formattedSubject);
+        formDataToSend.append("contributorName", contributorName); // ✅ Include name
+
+        try {
+            const response = await axios.post("https://synergic-iitbbs-backend.onrender.com/upload", formDataToSend, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+
+            if (response.data.success) {
+                setMessage("✅ File uploaded successfully!");
+                setFileUrl(response.data.link);
+            } else {
+                setMessage(`❌ Upload failed: ${response.data.error || "Unknown error."}`);
+            }
+        } catch (error) {
+            console.error("Upload Error:", error);
+            setMessage(error.response?.data?.error || "❌ Unexpected error occurred.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <div className="all">
             <img src={contri} className="con_img" alt="Contribute" />
             <div className="main23">
                 <h1 className="heading23">Contribute</h1>
+
+                {/* ✅ Contributor Name Input */}
+                <input 
+                    type="text" 
+                    name="contributorName" 
+                    value={formData.contributorName} 
+                    onChange={handleChange} 
+                    placeholder="Your Name" 
+                    className="dropdownss" 
+                />
+                <br />
 
                 {/* Year Selection */}
                 <select name="year" value={formData.year} onChange={handleChange} className="dropdownss">
@@ -124,25 +139,24 @@ export default function Contribute() {
 
                 {/* File Upload */}
                 <div 
-    className="file-drop-area"
-    onDragOver={handleDragOver}
-    onDrop={handleDrop}
-    onClick={() => document.getElementById("fileInput").click()}
->
-    {file ? <p>📄 {file.name}</p> : <p>Drag & Drop or Click to Upload File</p>}
-    <input 
-        id="fileInput" 
-        type="file" 
-        onChange={handleFileChange} 
-        className="file-input-hidden" 
-    />
-</div>
+                    className="file-drop-area"
+                    onDragOver={handleDragOver}
+                    onDrop={handleDrop}
+                    onClick={() => document.getElementById("fileInput").click()}
+                >
+                    {file ? <p>📄 {file.name}</p> : <p>Drag & Drop or Click to Upload File</p>}
+                    <input 
+                        id="fileInput" 
+                        type="file" 
+                        onChange={handleFileChange} 
+                        className="file-input-hidden" 
+                    />
+                </div>
 
                 <br />
                 <button onClick={handleUpload} className="upload" disabled={isLoading}>
-    {isLoading ? <div className="loader"></div> : "Contribute"}
-</button>
-
+                    {isLoading ? <div className="loader"></div> : "Contribute"}
+                </button>
 
                 {message && <p>{message}</p>}
             </div>

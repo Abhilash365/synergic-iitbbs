@@ -1,77 +1,82 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import './QuestionPapers.css'
+import { useParams, useSearchParams } from "react-router-dom";
+import "./QuestionPapers.css";
+
 const QuestionPapers = () => {
-  const { subject } = useParams();
+  const { subject } = useParams();  
+  const [searchParams] = useSearchParams();
+  const semester = searchParams.get("semester");  
+
   const [papers, setPapers] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [openYear, setOpenYear] = useState(null);
 
   useEffect(() => {
-    console.log(`📢 Fetching question papers for subject: ${subject}`);
+    if (!subject || !semester) {
+      setError("Invalid subject or semester.");
+      setLoading(false);
+      return;
+    }
 
-    fetch(`https://synergic-iitbbs-backend.onrender.com/questionpapers/${subject}`)
+    console.log(`📢 Fetching question papers for ${subject}, Semester: ${semester}`);
+
+    fetch(`https://synergic-iitbbs-backend.onrender.com/questionpapers/${subject}?semester=${semester}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
           console.log("✅ Papers received:", data.papers);
 
-          // *Grouping by yearOfStudy*
+          // Grouping by yearOfStudy
           const groupedPapers = data.papers.reduce((acc, paper) => {
-            const year = paper.yearOfStudy; // Group by yearOfStudy
-            if (!acc[year]) {
-              acc[year] = [];
-            }
-            acc[year].push(paper);
+            acc[paper.yearOfStudy] = acc[paper.yearOfStudy] || [];
+            acc[paper.yearOfStudy].push(paper);
             return acc;
           }, {});
 
           setPapers(groupedPapers);
         } else {
-          setError(data.message || "No data found");
+          setError(data.message || "No papers available.");
         }
         setLoading(false);
       })
       .catch((err) => {
         console.error("⚠ Error fetching papers:", err);
-        setError("⚠ Unable to fetch question papers. Please try again later.");
+        setError("Unable to fetch papers. Try again later.");
         setLoading(false);
       });
-  }, [subject]);
+  }, [subject, semester]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) return <p>Loading question papers...</p>;
+  if (error) return <p className="error">{error}</p>;
 
   return (
     <div className="container">
-      <h1>Question Papers for {subject}</h1>
-     <br />
+      <h1>Question Papers for {subject} - Semester {semester}</h1>
+      <br />
       {Object.keys(papers).length > 0 ? (
         <nav>
-          
-          <br />
           <ul className="ul_control">
-            {Object.keys(papers).map((yearOfStudy) => (
+            {Object.entries(papers).map(([yearOfStudy, papersList]) => (
               <li key={yearOfStudy}>
                 <button 
-  className="year-button" 
-  onClick={() => setOpenYear(openYear === yearOfStudy ? null : yearOfStudy)}
->
-  {yearOfStudy} {openYear === yearOfStudy ? "▼" : "▶"}
-</button>
+                  className="year-button" 
+                  onClick={() => setOpenYear(openYear === yearOfStudy ? null : yearOfStudy)}
+                >
+                  {yearOfStudy} {openYear === yearOfStudy ? "▼" : "▶"}
+                </button>
 
                 {openYear === yearOfStudy && (
-  <ul>
-    {papers[yearOfStudy].map((paper) => (
-      <li key={paper._id} className="paper-box">
-        <a href={paper.driveLink} target="_blank" rel="noopener noreferrer">
-          {paper.filename}
-        </a>
-      </li>
-    ))}
-  </ul>
-)}
+                  <ul>
+                    {papersList.map((paper) => (
+                      <li key={paper._id} className="paper-box">
+                        <a href={paper.driveLink} target="_blank" rel="noopener noreferrer">
+                          {paper.filename}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>
