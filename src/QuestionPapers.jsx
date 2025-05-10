@@ -21,7 +21,7 @@ const QuestionPapers = () => {
 
     console.log(`📢 Fetching question papers for ${subject}, Semester: ${semester}`);
 
-    fetch(`https://synergic-iitbbs-backend.onrender.com/questionpapers/${subject}?semester=${semester}`)
+    fetch(`https://synergic-iitbbs-backend.onrender.com/questionpapers/${subject}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {

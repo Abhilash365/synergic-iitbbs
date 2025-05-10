@@ -65,7 +65,7 @@ export default function Contribute() {
         formDataToSend.append("contributorName", contributorName); // ✅ Include name
 
         try {
-            const response = await axios.post("http://localhost:5000/upload", formDataToSend, {
+            const response = await axios.post("https://synergic-iitbbs-backend.onrender.com/upload", formDataToSend, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
 

@@ -7,7 +7,7 @@ import Navbar from "./Navbar.jsx";
 function Papers() {
   const [loading, setLoading] = useState(false);
   const [branch, setBranch] = useState(""); 
-  const [semester, setSemester] = useState("");  // Store semester here
+  const [semester, setSemester] = useState("chemistry Semester");  // Store semester here
   const [subjectDetails, setSubjectDetails] = useState([
     { name: "Mathematics", code: "MA1L001", materials_available: "0" },
     { name: "Chemistry", code: "CY1L001", materials_available: "0" },
@@ -60,8 +60,8 @@ function Papers() {
 
         <select onChange={handleSelect1} value={semester} className="dropdown">
           <option className="dropdown_option" value="">Semester</option>
-          <option value="Semester_1">Semester 1</option>
-          <option value="Semester_2">Semester 2</option>
+          <option value="chemistry-Semester">chemistry Semester</option>
+          <option value="Physics-Semester">Physics Semester</option>
           <option value="Semester_3">Semester 3</option>
           <option value="Semester_4">Semester 4</option>
           <option value="Semester_5">Semester 5</option>
@@ -85,7 +85,7 @@ function Papers() {
                   subject={subject.name} 
                   code={subject.code} 
                   num_mat={subject.materials_available}
-                  semester={semester}  {/* Pass the selected semester to Card */}
+                  semester={semester}
                 />
               </div>
             );
