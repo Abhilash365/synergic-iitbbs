@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, Outlet, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 // --- Helper & Layout Components ---
@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 const NavbarLayout = ({ setAuth }) => (
   <>
     <Navbar setAuth={setAuth} />
-    <main className="p-4 pt-20"> {/* Add padding to avoid content hiding behind fixed navbar */}
+    <main style={{ paddingTop: '80px', padding: '1rem' }}> {/* Add padding to avoid content hiding behind fixed navbar */}
       <Outlet />
     </main>
   </>
@@ -37,11 +37,11 @@ const Navbar = ({ setAuth }) => {
         setAuth(false);
     };
     return (
-        <nav style={{ position: 'fixed', top: 0, width: '100%', background: '#333', color: 'white', padding: '1rem', zIndex: 1000, display: 'flex', justifyContent: 'space-around' }}>
-            <a href="/materials">Materials</a>
-            <a href="/newskill">New Skill</a>
-            <a href="/questionpapers">Question Papers</a>
-            <a href="/contribute">Contribute</a>
+        <nav style={{ position: 'fixed', top: 0, width: '100%', background: '#333', color: 'white', padding: '1rem', zIndex: 1000, display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+            <Link to="/materials" style={{ color: 'white', textDecoration: 'none' }}>Materials</Link>
+            <Link to="/newskill" style={{ color: 'white', textDecoration: 'none' }}>New Skill</Link>
+            <Link to="/questionpapers" style={{ color: 'white', textDecoration: 'none' }}>Question Papers</Link>
+            <Link to="/contribute" style={{ color: 'white', textDecoration: 'none' }}>Contribute</Link>
             <button onClick={handleLogout} style={{ background: 'red', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '5px', cursor: 'pointer' }}>Logout</button>
         </nav>
     );
@@ -57,12 +57,12 @@ const Login = ({ setAuth }) => {
             <h1>Login Page</h1>
             <p>Click to simulate logging in.</p>
             <button onClick={handleLogin} style={{ padding: '10px 20px', fontSize: '16px' }}>Login</button>
-            <p>Don't have an account? <a href="/signup">Sign up</a></p>
+            <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
         </div>
     );
 };
 
-const Signup = () => <div style={{ textAlign: 'center', marginTop: '50px' }}><h1>Signup Page</h1><p><a href="/">Back to Login</a></p></div>;
+const Signup = () => <div style={{ textAlign: 'center', marginTop: '50px' }}><h1>Signup Page</h1><p><Link to="/">Back to Login</Link></p></div>;
 const Materials = () => <h1>Materials Page</h1>;
 const Newskill = () => <h1>New Skill Page</h1>;
 const Papers = () => <h1>Question Papers Listing</h1>;
@@ -82,7 +82,8 @@ export default function App() {
     try {
       const authStatus = localStorage.getItem("isAuthenticated") === "true";
       setIsAuthenticated(authStatus);
-    } catch (error) {
+    } catch (error)
+    {
       console.error("Could not read from localStorage", error);
       setIsAuthenticated(false);
     } finally {
