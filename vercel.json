@@ -1,8 +1,8 @@
 {
-    "rewrites": [
-        {
-            "source": "/(.*)",
-            "destination": "/questionpapers"
-        }
-    ]
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/questionpapers"
+    }
+  ]
 }
