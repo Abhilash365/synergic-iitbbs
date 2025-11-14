@@ -101,12 +101,18 @@ export default function Contribute() {
                 <br />
 
                 {/* Year Selection */}
-                <select name="year" value={formData.year} onChange={handleChange} className="dropdownss">
-                    <option value="">Year of Study</option>
-                    {Array.from({ length: 2025 - 2017 + 1 }, (_, i) => 2017 + i).map((yr) => (
-                        <option key={yr} value={yr}>{yr}</option>
-                    ))}
-                </select>
+<select name="year" value={formData.year} onChange={handleChange} className="dropdownss">
+    <option value="">Year of Study</option>
+    {Array.from({ length: (2025 - 2017 + 1) }, (_, i) => {
+        const start = 2017 + i;
+        const end = start + 1;
+        const range = `${start}-${end}`;
+        return (
+            <option key={range} value={range}>{range}</option>
+        );
+    })}
+</select>
+
                 <br />
 
                 {/* Branch & Semester Selection */}
