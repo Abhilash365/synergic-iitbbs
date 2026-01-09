@@ -1,46 +1,63 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Papers.css";
 import Card from "./Card.jsx";
 import "./card.css";
-import Navbar from "./Navbar.jsx";
 
 function Papers() {
   const [loading, setLoading] = useState(false);
-  const [branch, setBranch] = useState(""); 
-  const [semester, setSemester] = useState("chemistry Semester");  // Store semester here
-  const [subjectDetails, setSubjectDetails] = useState([
-    { name: "Mathematics", code: "MA1L001", materials_available: "0" },
-    { name: "Chemistry", code: "CY1L001", materials_available: "0" },
-    { name: "English", code: "HS1L002", materials_available: "0" },
-    { name: "Electrical Technology", code: "EE1L001", materials_available: "0" }
-  ]); // Default subjects
+
+  // 1. Initialize state from sessionStorage if it exists
+  const [branch, setBranch] = useState(() => {
+    return sessionStorage.getItem("saved_branch") || "";
+  });
+
+  const [semester, setSemester] = useState(() => {
+    return sessionStorage.getItem("saved_semester") || "chemistry-Semester";
+  });
+
+  const [subjectDetails, setSubjectDetails] = useState(() => {
+    const savedSubjects = sessionStorage.getItem("saved_subjects");
+    return savedSubjects ? JSON.parse(savedSubjects) : [
+      { name: "Mathematics", code: "MA1L001", materials_available: "0" },
+      { name: "Chemistry", code: "CY1L001", materials_available: "0" },
+      { name: "English", code: "HS1L002", materials_available: "0" },
+      { name: "Electrical Technology", code: "EE1L001", materials_available: "0" }
+    ];
+  });
 
   const handleSelect = (event) => setBranch(event.target.value);
-  const handleSelect1 = (event) => setSemester(event.target.value);  // Set semester here
+  const handleSelect1 = (event) => setSemester(event.target.value);
 
   const handleFindClick = async () => {
     if (!branch || !semester) {
       alert("Please select both branch and semester.");
       return;
     }
-  
-    setLoading(true); // Start loading animation
-  
+
+    setLoading(true);
+
     try {
       const response = await fetch(`https://synergic-iitbbs-backend.onrender.com/subjects/${branch}/${semester}`);
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
+
       const data = await response.json();
-      setSubjectDetails(data.success ? data.subjects : []);
-      console.log("Server Response:", data.subjects);
+      const subjects = data.success ? data.subjects : [];
+
+      // 2. Update state and Save to sessionStorage
+      setSubjectDetails(subjects);
+      sessionStorage.setItem("saved_branch", branch);
+      sessionStorage.setItem("saved_semester", semester);
+      sessionStorage.setItem("saved_subjects", JSON.stringify(subjects));
+
+      console.log("Server Response:", subjects);
     } catch (error) {
       console.error("Error fetching data:", error);
-      setSubjectDetails([]); // Reset if error occurs
+      setSubjectDetails([]);
     } finally {
-      setLoading(false); // Stop loading animation
+      setLoading(false);
     }
   };
 

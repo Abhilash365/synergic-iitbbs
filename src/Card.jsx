@@ -1,15 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import './card.css';
-import csImg from './cs.png';
-import eceImg from './ec.png';
-import eeImg from './ee.png';
-import meImg from './me.png';
-import mmImg from './mm.jpg';
-import ceImg from './Ce.png';
-import epImg from './ep.jpg';
+import csImg from './images/cs.png';
+import eceImg from './images/ec.png';
+import eeImg from './images/ee.png';
+import meImg from './images/me.png';
+import mmImg from './images/mm.jpg';
+import ceImg from './images/Ce.png';
+import epImg from './images/ep.jpg';
 import othersImg from './others.jpg';
 
-export default function Card({ subject, code, num_mat, semester }) {  // 👈 Accept semester as prop
+export default function Card({ subject, code, num_mat, semester }) {
   const departmentImages = {
     cs: csImg,
     ece: eceImg,
@@ -25,7 +25,10 @@ export default function Card({ subject, code, num_mat, semester }) {  // 👈 Ac
   const navigate = useNavigate();
 
   const handleExplore = () => {
-    const route = `/questionpapers/${subject.replace(/\s+/g, '_')}?semester=${semester}`;  // 👈 Add query param
+    // Navigating away... 
+    // Because we used sessionStorage in Papers.jsx, 
+    // the state will be there when we come back.
+    const route = `/questionpapers/${subject.replace(/\s+/g, '_')}?semester=${semester}`;
     navigate(route);
   };
 
@@ -40,7 +43,6 @@ export default function Card({ subject, code, num_mat, semester }) {  // 👈 Ac
             <p className='des1'>{subject}</p>
             <p className='des2'>{code}</p>
             <br />
-            {/* <p className='des3'>{num_mat}+ materials available</p> */}
             <button onClick={handleExplore}>Explore</button>
           </div>
         </div>
