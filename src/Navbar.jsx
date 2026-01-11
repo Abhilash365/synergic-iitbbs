@@ -25,8 +25,8 @@ const Navbar = ({ setAuth }) => {
 
       {/* Navigation Menu */}
       <ul className={`buttons ${menuOpen ? "active" : ""}`}>
-        <li className={location.pathname === "/questionpapers" ? "color" : ""}>
-          <Link to="/questionpapers" onClick={() => setMenuOpen(false)}>Question Papers</Link>
+        <li className={location.pathname === "/" ? "color" : ""}>
+          <Link to="/" onClick={() => setMenuOpen(false)}>Question Papers</Link>
         </li>
         <li className={location.pathname === "/materials" ? "color" : ""}>
           <Link to="/materials" onClick={() => setMenuOpen(false)}>Materials</Link>
