@@ -9,11 +9,6 @@ const Navbar = ({ setAuth }) => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated"); // Clear authentication state
-    setAuth(false); // Update state in App.js
-    navigate("/signin"); // Redirect to login page
-  };
 
   return (
     <div className="relative">
@@ -43,7 +38,6 @@ const Navbar = ({ setAuth }) => {
           <Link to="/contribute" onClick={() => setMenuOpen(false)}>Contribute</Link>
         </li>
         <li>
-          <button className="logout_btn" onClick={handleLogout}>Logout</button>
         </li>
       </ul>
       </div>
