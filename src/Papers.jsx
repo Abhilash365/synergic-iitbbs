@@ -12,7 +12,7 @@ function Papers() {
   });
 
   const [semester, setSemester] = useState(() => {
-    return sessionStorage.getItem("saved_semester") || "chemistry-Semester";
+    return sessionStorage.getItem("saved_semester") || "";
   });
 
   const [subjectDetails, setSubjectDetails] = useState(() => {
