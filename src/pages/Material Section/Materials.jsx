@@ -1,7 +1,7 @@
-import Navbar from "./Navbar";
+
 import React, { useState } from 'react'
 import './Materials.css'
-import upload from './upload.png'
+import upload from './../../images/upload.png'
 export default function Materials(){
 
     return(<>

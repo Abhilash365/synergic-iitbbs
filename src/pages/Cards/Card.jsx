@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import './card.css';
-import csImg from './images/cs.png';
-import eceImg from './images/ec.png';
-import eeImg from './images/ee.png';
-import meImg from './images/me.png';
-import mmImg from './images/mm.jpg';
-import ceImg from './images/Ce.png';
-import epImg from './images/ep.jpg';
-import othersImg from './others.jpg';
+import csImg from './../../images/cs.png';
+import eceImg from './../../images/ec.png';
+import eeImg from './../../images/ee.png';
+import meImg from './../../images/me.png';
+import mmImg from './../../images/mm.jpg';
+import ceImg from './../../images/Ce.png';
+import epImg from './../../images/ep.jpg';
+import othersImg from './../../images/others.jpg';
 
 export default function Card({ subject, code, num_mat, semester }) {
   const departmentImages = {

@@ -1,49 +1,56 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login1.css';
-import pen from './pen.png';
-// Link import removed because Signup is being removed
+import pen from '../../images/logo.png';
 
 function Login({ setAuth }) {  
     const [credentials, setCredentials] = useState({ username: "", password: "" });
-    const [rememberMe, setRememberMe] = useState(false); // New state for checkbox
-    const navigate = useNavigate();
+    const [rememberMe, setRememberMe] = useState(false); 
     const [loading, setLoading] = useState(false);
-
-    const handleSubmit = async (e) => {
-        if (e) e.preventDefault();
-        setLoading(true);
-
-        try {
-            const response = await fetch("https://synergic-iitbbs-backend.onrender.com/api/loginUser", {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username: credentials.username, password: credentials.password })
-            });
-
-            const json = await response.json();
-            
-            if (!json.success) {
-                alert("Enter valid credentials");
-                setCredentials({ username: "", password: "" });
-            } else {
-                // Pass both auth status and rememberMe preference to App.js
-                setAuth(true, rememberMe);  
-                navigate("/questionpapers"); 
-            }
-        } catch (error) {
-            alert("Login failed. Please try again later.");
-        } finally {
-            setLoading(false);
-        }
-    };
+    const navigate = useNavigate();
 
     const onChange = (event) => {
         setCredentials({ ...credentials, [event.target.name]: event.target.value });
     };
 
+    const handleSubmit = async (e) => {
+        if (e) e.preventDefault();
+        if (!credentials.username || !credentials.password) {
+            alert("Please fill in all fields");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const response = await fetch("https://synergic-iitbbs-backend.onrender.com/api/loginUser", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    username: credentials.username, 
+                    password: credentials.password 
+                })
+            });
+
+            const json = await response.json();
+            
+            if (json.success) {
+                // In a real app, you might save json.authToken here
+                setAuth(true); // Updates App.js state and localStorage
+                navigate("/questionpapers"); 
+            } else {
+                alert(json.message || "Invalid credentials");
+                setCredentials({ ...credentials, password: "" });
+            }
+        } catch (error) {
+            console.error("Login Error:", error);
+            alert("Login failed. Please check your connection.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const handleKeyDown = (event) => {
-        if (event.key === "Enter" && event.target.tagName === "INPUT") {
+        if (event.key === "Enter") {
             handleSubmit(event);
         }
     };
@@ -57,30 +64,32 @@ function Login({ setAuth }) {
             <div className="login-box">
                 <h2 className="login-title">Sign In</h2>
 
-                <form className="login-form" onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
+                <form className="login-form" onSubmit={handleSubmit}>
                     <div className="input-wrapper">
                         <input
                             type="text"
-                            placeholder="Enter your username"
+                            placeholder="Username"
                             name="username"
                             value={credentials.username}
                             onChange={onChange}
                             className="login-input"
+                            required
                         />
                     </div>
                     
                     <div className="input-wrapper">
                         <input
                             type="password"
-                            placeholder="Enter your password"
+                            placeholder="Password"
                             name="password"
                             value={credentials.password}
                             onChange={onChange}
+                            onKeyDown={handleKeyDown}
                             className="login-input"
+                            required
                         />
                     </div>
 
-                    {/* Remember Me Checkbox */}
                     <div className="remember-me-container" style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', color: 'white' }}>
                         <input 
                             type="checkbox" 
@@ -96,8 +105,6 @@ function Login({ setAuth }) {
                         {loading ? "Signing In..." : "Sign In"}
                     </button>
                 </form>
-
-                {/* Signup Section Removed as per your previous request */}
             </div>
         </div>
     );

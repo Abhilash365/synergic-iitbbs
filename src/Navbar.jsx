@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import pen from './pen.png';
-
+import pen from './images/logo.png';
 
 const Navbar = ({ setAuth }) => {
   const location = useLocation();
@@ -30,9 +29,6 @@ const Navbar = ({ setAuth }) => {
         </li>
         <li className={location.pathname === "/materials" ? "color" : ""}>
           <Link to="/materials" onClick={() => setMenuOpen(false)}>Materials</Link>
-        </li>
-        <li className={location.pathname === "/newskill" ? "color" : ""}>
-          <Link to="/newskill" onClick={() => setMenuOpen(false)}>New Skill</Link>
         </li>
         <li className={location.pathname === "/contribute" ? "color" : ""}>
           <Link to="/contribute" onClick={() => setMenuOpen(false)}>Contribute</Link>

@@ -13,7 +13,7 @@ const QuestionPapers = () => {
   const [openYear, setOpenYear] = useState(null);
 
   useEffect(() => {
-    if (!subject || !semester) {
+    if (!subject) {
       setError("Invalid subject or semester.");
       setLoading(false);
       return;

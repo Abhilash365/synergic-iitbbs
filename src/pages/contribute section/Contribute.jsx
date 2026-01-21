@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Contribute.css";
-import contri from "./contri.png";
-import subjectsData from "./subjects.json";
+import contri from "../../images/contribute.png";
+import subjectsData from "../../subjects.json";
 
 export default function Contribute() {
     const [file, setFile] = useState(null);

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Login1.css';
 import { useNavigate } from 'react-router-dom';
-import pen from './pen.png';
+import pen from '../../images/logo.png';
 import { Link } from 'react-router-dom';
 
 function Signup() {

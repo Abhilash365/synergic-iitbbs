@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Papers.css";
-import Card from "./Card.jsx";
-import "./card.css";
+import Card from "./../Cards/Card.jsx"
+import "./../Cards/card.css";
 
 function Papers() {
   const [loading, setLoading] = useState(false);
