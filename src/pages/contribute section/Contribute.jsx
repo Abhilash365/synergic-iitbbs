@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Cookies from "js-cookie"; // 1. Import Cookies
 import "./Contribute.css";
 import contri from "../../images/contribute.png";
 import subjectsData from "../../subjects.json";
@@ -14,11 +15,19 @@ export default function Contribute() {
         branch: "",
         semester: "",
         subject: "",
-        contributorName: "", // ✅ New field for contributor's name
+        contributorName: "", // Will be filled from cookie
     });
 
     const [isLoading, setIsLoading] = useState(false);
     const [filteredSubjects, setFilteredSubjects] = useState([]);
+
+    // 2. Fetch the cookie when the component loads
+    useEffect(() => {
+        const savedUsername = Cookies.get("username");
+        if (savedUsername) {
+            setFormData((prev) => ({ ...prev, contributorName: savedUsername }));
+        }
+    }, []);
 
     useEffect(() => {
         const { branch, semester } = formData;
@@ -36,9 +45,7 @@ export default function Contribute() {
     };
 
     const handleFileChange = (event) => setFile(event.target.files[0]);
-
     const handleDragOver = (event) => event.preventDefault();
-
     const handleDrop = (event) => {
         event.preventDefault();
         setFile(event.dataTransfer.files[0]);
@@ -46,11 +53,11 @@ export default function Contribute() {
 
     const handleUpload = async () => {
         setIsLoading(true);
-
         const { year, branch, semester, subject, contributorName } = formData;
 
+        // Validation including the cookie-based name
         if (!file || !year || !branch || !semester || !subject || !contributorName) {
-            setMessage("⚠ Please fill all fields including your name and select a file.");
+            setMessage("⚠ Please fill all fields. Ensure you are logged in.");
             setIsLoading(false);
             return;
         }
@@ -62,7 +69,7 @@ export default function Contribute() {
         formDataToSend.append("branch", branch);
         formDataToSend.append("semester", semester);
         formDataToSend.append("subject", formattedSubject);
-        formDataToSend.append("contributorName", contributorName); // ✅ Include name
+        formDataToSend.append("contributorName", contributorName);
 
         try {
             const response = await axios.post("https://synergic-iitbbs-backend.onrender.com/upload", formDataToSend, {
@@ -89,33 +96,20 @@ export default function Contribute() {
             <div className="main23">
                 <h1 className="heading23">Contribute</h1>
 
-                {/* ✅ Contributor Name Input */}
-                <input 
-                    type="text" 
-                    name="contributorName" 
-                    value={formData.contributorName} 
-                    onChange={handleChange} 
-                    placeholder="Your Name" 
-                    className="dropdownss" 
-                />
-                <br />
 
                 {/* Year Selection */}
-<select name="year" value={formData.year} onChange={handleChange} className="dropdownss">
-    <option value="">Year of Study</option>
-    {Array.from({ length: (2025 - 2017 + 1) }, (_, i) => {
-        const start = 2017 + i;
-        const end = start + 1;
-        const range = `${start}-${end}`;
-        return (
-            <option key={range} value={range}>{range}</option>
-        );
-    })}
-</select>
+                <select name="year" value={formData.year} onChange={handleChange} className="dropdownss">
+                    <option value="">Year of Study</option>
+                    {Array.from({ length: (2025 - 2017 + 1) }, (_, i) => {
+                        const start = 2017 + i;
+                        const end = start + 1;
+                        const range = `${start}-${end}`;
+                        return <option key={range} value={range}>{range}</option>;
+                    })}
+                </select>
 
                 <br />
 
-                {/* Branch & Semester Selection */}
                 <div className="flexx">
                     <select name="branch" onChange={handleChange} value={formData.branch} className="dropdownsss">
                         <option value="">Branch</option>
@@ -132,7 +126,6 @@ export default function Contribute() {
                     </select>
                 </div>
 
-                {/* Subject Selection */}
                 <select name="subject" onChange={handleChange} value={formData.subject} className="dropdownss">
                     <option value="">Select Subject</option>
                     {filteredSubjects.map((subj, index) => (
@@ -143,7 +136,6 @@ export default function Contribute() {
                 </select>
                 <br />
 
-                {/* File Upload */}
                 <div 
                     className="file-drop-area"
                     onDragOver={handleDragOver}
@@ -151,12 +143,7 @@ export default function Contribute() {
                     onClick={() => document.getElementById("fileInput").click()}
                 >
                     {file ? <p>📄 {file.name}</p> : <p>Drag & Drop or Click to Upload File</p>}
-                    <input 
-                        id="fileInput" 
-                        type="file" 
-                        onChange={handleFileChange} 
-                        className="file-input-hidden" 
-                    />
+                    <input id="fileInput" type="file" onChange={handleFileChange} className="file-input-hidden" />
                 </div>
 
                 <br />
@@ -164,7 +151,7 @@ export default function Contribute() {
                     {isLoading ? <div className="loader"></div> : "Contribute"}
                 </button>
 
-                {message && <p>{message}</p>}
+                {message && <p style={{ color: 'white', marginTop: '10px' }}>{message}</p>}
             </div>
         </div>
     );
