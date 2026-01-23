@@ -26,8 +26,10 @@ function Login({ setAuth }) {
             setAuth(true);
             navigate("/questionpapers");
         } catch (error) {
-            console.error("Google Auth Error:", error);
-            alert("Google Sign-In failed.");
+            console.error("Full Google Auth Error object:", error);
+    console.error("Error code:", error.code);
+    console.error("Error message:", error.message);
+    alert(`Google Sign-In failed: ${error.message}`);
         }
     };
 
