@@ -98,9 +98,9 @@ function Papers() {
             const isLastRow = index >= Math.floor(subjectDetails.length / 3) * 3;
             return (
               <div key={index} className={isLastRow ? "flex-row" : ""}>
-                <Card 
-                  subject={subject.name} 
-                  code={subject.code} 
+                <Card
+                  subject={subject.name}
+                  code={subject.code}
                   num_mat={subject.materials_available}
                   semester={semester}
                 />

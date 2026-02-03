@@ -28,7 +28,7 @@ export default function Card({ subject, code, num_mat, semester }) {
     // Navigating away... 
     // Because we used sessionStorage in Papers.jsx, 
     // the state will be there when we come back.
-    const route = `/questionpapers/${subject.replace(/\s+/g, '_')}?semester=${semester}`;
+    const route = `/questionpapers/${subject.replace(/\s+/g, '_')}`;
     navigate(route);
   };
 
