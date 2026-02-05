@@ -33,8 +33,7 @@ const Navbar = () => {
 
       <div className="nav-pill-container">
         {navItems.map((item) => {
-          // Logic: If current path is exactly item.path, mark as active
-          const isActive = location.pathname === item.path;
+          const isActive = location.pathname.startsWith(item.path);
           
           return (
             <Link
