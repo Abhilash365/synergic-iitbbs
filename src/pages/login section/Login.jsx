@@ -4,11 +4,13 @@ import Cookies from 'js-cookie';
 import { auth, googleProvider, signInWithPopup } from "../../firebase"; 
 import './Login1.css';
 import pen from '../../images/logo.png';
+import Toast from '../Toast/Toast'; // Adjust path as needed
 
 function Login({ setAuth }) {  
     const [credentials, setCredentials] = useState({ username: "", password: "" });
     const [rememberMe, setRememberMe] = useState(false); 
     const [loading, setLoading] = useState(false);
+    const [toast, setToast] = useState(null); // State to trigger toast
     const navigate = useNavigate();
 
     // --- Google Auth with Firebase ---
@@ -17,19 +19,18 @@ function Login({ setAuth }) {
             const result = await signInWithPopup(auth, googleProvider);
             const user = result.user;
             
-            // Set cookie using Google Display Name
             Cookies.set('username', user.displayName, { expires: 7 });
-            
-            // LOG THE USERNAME
             console.log("Logged in user (Google):", user.displayName);
             
+            // Show Success Toast
+            setToast({ type: "success", message: `Welcome back, ${user.displayName}!` });
+            
             setAuth(true);
-            navigate("/questionpapers");
+            // Delay navigation slightly so they see the success toast
+            setTimeout(() => navigate("/questionpapers"), 1500);
         } catch (error) {
-            console.error("Full Google Auth Error object:", error);
-    console.error("Error code:", error.code);
-    console.error("Error message:", error.message);
-    alert(`Google Sign-In failed: ${error.message}`);
+            console.error("Google Auth Error:", error);
+            setToast({ type: "error", message: error.message || "Google Sign-In failed" });
         }
     };
 
@@ -55,17 +56,15 @@ function Login({ setAuth }) {
             
             if (json.success) {
                 Cookies.set('username', credentials.username, { expires: rememberMe ? 7 : undefined });
-
-                // LOG THE USERNAME
-                console.log("Logged in user (Backend):", credentials.username);
-
+                setToast({ type: "success", message: "Login Successful!" });
+                
                 setAuth(true); 
-                navigate("/questionpapers"); 
+                setTimeout(() => navigate("/questionpapers"), 1200); 
             } else {
-                alert(json.message || "Invalid credentials");
+                setToast({ type: "error", message: "Invalid credentials" });
             }
         } catch (error) {
-            alert("Login failed.");
+            setToast({ type: "error", message: "Connection failed. Please check your internet." });
         } finally {
             setLoading(false);
         }
@@ -73,6 +72,15 @@ function Login({ setAuth }) {
 
     return (
         <div className="login-container">
+            {/* Render Toast if state exists */}
+            {toast && (
+                <Toast 
+                    type={toast.type} 
+                    message={toast.message} 
+                    onClose={() => setToast(null)} 
+                />
+            )}
+
             <div className="logo"><img src={pen} alt="Logo"/></div>
             <div className="login-box">
                 <h2 className="login-title">Sign In</h2>

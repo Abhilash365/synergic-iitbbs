@@ -37,12 +37,11 @@
       justify-content: center;
       align-items: center;
 }
-  
 
-  .pen_logo{
-    height: 100%;
-    width: 120%;
-  }
+.nav-logo{
+  height:100px;
+  width:150px;
+}
   
   /* Navigation Menu */
   .buttons {
@@ -168,7 +167,7 @@
 .synergic-navbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap:10%;
   padding: 15px 40px;
   background-color: transparent; /* Assuming a white page background */
   font-family: 'Inter', sans-serif;
@@ -200,7 +199,6 @@
   padding: 6px;
   border-radius: 50px;
   gap: 5px;
-  margin-left:12%;
 }
 
 .nav-item {
@@ -272,4 +270,142 @@
 .profile-btn {
   background-color: #000000; /* Light gray from Notion-style screenshot */
   border: none;
+}
+
+
+/* Container for the profile and dropdown */
+.profile-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* The horizontal bar style from your image */
+.profile-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 12px;
+  background: transparent;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.profile-trigger:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* The square initial avatar */
+.profile-avatar {
+  width: 48px;
+  height: 48px;
+  background-color: #d4f05c; /* Light purple like your image */
+  color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border-radius: 12px;
+  font-size: 21px;
+}
+
+.profile-name {
+  color: rgb(245, 245, 245);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+
+/* Container logic */
+.profile-select {
+  width: fit-content;
+  cursor: pointer;
+  position: relative;
+  transition: 600ms;
+  color: white;
+  /* Removed overflow: hidden so the dropdown can slide out of the container */
+}
+
+.profile-selected {
+  background-color: #2a2a2a;
+  padding: 8px 16px;
+  margin:5px 25px;
+  border-radius: 12px;
+  z-index: 999;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 160px;
+}
+
+
+
+.profile-avatar {
+  width: 28px;
+  height: 28px;
+  background-color: #c8ee44;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  border-radius: 4px;
+}
+
+.profile-arrow {
+  width: 12px;
+  height: 12px;
+  transition: 300ms;
+  transform: rotate(-90deg); /* Initial state from your code */
+  margin-left: auto;
+}
+
+/* Options/Dropdown Panel */
+.profile-options {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  padding: 5px;
+  background-color: #2a2f3b;
+  position: absolute; /* Changed to absolute to float over content */
+  top: -20px; /* Start slightly higher for the slide effect */
+  left: 0;
+  right: 0;
+  opacity: 0;
+  transition: 300ms;
+  pointer-events: none; /* Prevent clicking when hidden */
+  margin-top: 5px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.105);
+}
+
+/* Animation triggers */
+.profile-options.show {
+  opacity: 1;
+  top: 110%; /* Slides down to sit below the trigger */
+  pointer-events: auto;
+}
+
+.profile-arrow.open {
+  transform: rotate(0deg);
+}
+
+
+/* Individual items */
+.profile-option {
+  border-radius: 5px;
+  padding: 10px 12px;
+  transition: 300ms;
+  background-color: #2a2f3b;
+  font-size: 14px;
+}
+
+.profile-option:hover {
+  background-color: #323741;
+}
+
+.profile-option.logout {
+  color: #ff5c5c;
+  border-top: 1px solid #3d4454;
+  margin-top: 4px;
 }

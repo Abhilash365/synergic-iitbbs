@@ -1,0 +1,107 @@
+.save-page-container {
+  padding: 40px 8%;
+  background-color: #fff;
+  min-height: 100vh;
+}
+
+.folder-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+}
+
+.folder-card {
+  background-color: #c8ee44; 
+  width: 180px;
+  height: 110px;
+  border-radius: 12px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.folder-card.active {
+  background-color: #000;
+  color: #c8ee44;
+}
+
+.folder-icon-wrapper {
+  font-size: 1.5rem;
+}
+
+.folder-title {
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #1a1a1a;
+}
+
+/* Table Styles */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.papers-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: sans-serif;
+}
+
+.papers-table th {
+  text-align: left;
+  padding: 15px;
+  border-bottom: 2px solid #eee;
+  color: #666;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.papers-table td {
+  padding: 20px 15px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.file-link { /* Standard color */
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+/* This creates the "water resources" green look from your image */
+.papers-table tr:hover .file-link {
+  color: #a6c82d;
+  text-decoration: underline;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.table-loader, .empty-table {
+  text-align: center;
+  padding: 40px !important;
+  color: #999;
+  font-style: italic;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #666;
+}

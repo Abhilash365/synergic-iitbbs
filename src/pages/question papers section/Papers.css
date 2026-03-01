@@ -1,134 +1,263 @@
-/* Navigation Dropdown Styling */
+/* Navigation Dropdown Layout */
 .NavDrop {
   height: 70px;
   padding-left: 10%;
   padding-right: 10%;
   display: flex;
   align-items: center;
-  /* justify-content: ; */
-  justify-content: center;
-  gap: 10px;
+  gap: 15px;
   flex-wrap: wrap;
-  z-index: 10; 
-  /* background-color: rebeccapurple;*/
-} 
-/* .NavDrop{
-  height: 70px;
-  padding-left: 10%;
-  padding-right: 10%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-} */
-/* Dropdown Styling */
-.dropdown {
-  width: 30%;
-  height: 60%;
-  cursor: pointer;
-  border-radius: 5px;
-  border: 0.4px solid #363535;
-  margin: 5px;
-  text-align: center;
-  flex-grow: 1;
-  font-size: 18px; /* Default for desktop */
+  z-index: 10;
+  margin-bottom: 20px;
+  margin-top: 3%;
 }
 
-select option:hover {
-  background-color: #7adb34;
-  color: rgb(0, 0, 0);
-}
-
-/* Find Button Styling */
+/* Simplified Find Button */
 .paper_find {
-  width: 25%;
-  height: 60%;
-  background-color: #FF7F00;
-  color: white;
+  background-color: #C6EF4E;
+  color: black;
   font-size: 18px;
   font-weight: 600;
-  padding: 10px 20px;
+  padding: 10px 25px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  align-self: center;
-  position: relative; 
-  z-index: 1;/* Ensures loading animation is visible */
+  transition: background-color 0.3s ease;
 }
 
 .paper_find:hover {
-  background-color: #ff6600;
+  background-color: #b5db45; /* Slight darken on hover */
 }
 
 .paper_find:disabled {
+  background-color: #e0e0e0;
   cursor: not-allowed;
-  background-color: #ff6600;
 }
 
-/* Loader effect */
-.paper_find.loading::after {
-  content: "";
-  display: block;
-  width: 18px;
-  height: 18px;
-  border: 3px solid transparent;
-  border-top-color: white;
-  border-radius: 50%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  animation: spin 0.8s linear infinite;
-  visibility: visible;
+/* Custom Select Dropdown Styling */
+.select {
+  width: 180px;
+  cursor: pointer;
+  position: relative;
+  transition: 300ms;
+  color: black;
 }
 
-/* Keyframes for rotating effect */
-@keyframes spin {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
+.selected {
+  background-color: white;
+  padding: 10px;
+  margin-bottom: 3px;
+  position: relative;
+  z-index: 10;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid black; /* This is your bottom stroke */
 }
 
-/* Main Layout */
-.main56 {
+.arrow {
+  height: 10px;
+  transform: rotate(-90deg);
+  width: 25px;
+  fill: black;
+  transition: 300ms;
+}
+
+.options {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
-
-/* Card Styling */
-.card {
+  border-radius: 5px;
+  padding: 5px;
+  background-color: white;
+  position: absolute;
+  top: 40px;
+  left: 0;
   width: 100%;
-  max-width: clamp(250px, 30vw, 300px);
+  opacity: 0;
+  visibility: hidden;
+  transition: 300ms;
+  z-index: 100;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-/* MOBILE FIXES */
+.select:hover > .options {
+  opacity: 1;
+  visibility: visible;
+  top: 45px;
+}
+
+.select:hover > .selected .arrow {
+  transform: rotate(0deg);
+}
+
+.option {
+  display: block;
+  border-radius: 5px;
+  padding: 8px;
+  transition: 300ms;
+  background-color: white;
+  font-size: 14px;
+  width: 100%;
+}
+
+.option:hover {
+  background-color: #C6EF4E;
+}
+
+.options input[type="radio"] {
+  display: none;
+}
+
+.options input[type="radio"]:checked + label {
+  display: none;
+}
+
+/* Logic for displaying selected text */
+.select:has(input#all-b:checked) .selected::before { content: attr(data-default); }
+.select:has(input#cse:checked) .selected::before { content: attr(data-cse); }
+.select:has(input#ece:checked) .selected::before { content: attr(data-ece); }
+.select:has(input#ee:checked) .selected::before { content: attr(data-ee); }
+.select:has(input#mech:checked) .selected::before { content: attr(data-mech); }
+.select:has(input#civil:checked) .selected::before { content: attr(data-civil); }
+.select:has(input#met:checked) .selected::before { content: attr(data-met); }
+.select:has(input#ep:checked) .selected::before { content: attr(data-ep); }
+
+.select:has(input#all-s:checked) .selected::before { content: attr(data-default); }
+.select:has(input#s1:checked) .selected::before { content: attr(data-s1); }
+.select:has(input#s2:checked) .selected::before { content: attr(data-s2); }
+.select:has(input#s3:checked) .selected::before { content: attr(data-s3); }
+.select:has(input#s4:checked) .selected::before { content: attr(data-s4); }
+.select:has(input#s5:checked) .selected::before { content: attr(data-s5); }
+.select:has(input#s6:checked) .selected::before { content: attr(data-s6); }
+.select:has(input#s7:checked) .selected::before { content: attr(data-s7); }
+.select:has(input#s8:checked) .selected::before { content: attr(data-s8); }
+
+.options label::before {
+  content: attr(data-txt);
+}
+
+
+
+/* Mobile Adjustments */
 @media (max-width: 768px) {
   .NavDrop {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 5px;
-    margin-bottom: 40px;
+    height: auto;
+    padding-top: 20px;
+    gap: 10px;
   }
-
-  .dropdown {
-    width: 32%;
-    font-size: 12px; /* Reduced font size to prevent overflow */
-    padding: 5px;
+  .select {
+    width: 45%;
   }
-
   .paper_find {
-    width: 28%; /* Adjusted width to fit horizontally */
-    font-size: 14px; /* Slightly smaller button text */
-    padding: 8px;
+    margin-top: 10px;
   }
+}
 
+
+.paper_find {
+ outline: none;
+ cursor: pointer;
+ border: none;
+ padding: 0.56rem 2rem;
+ margin: 0;
+ font-family: inherit;
+ font-size: inherit;
+ position: relative;
+ display: inline-block;
+ letter-spacing: 0.05rem;
+ font-weight: 500;
+ font-size: 14px;
+ overflow: hidden;
+ background: #66ff66;
+ color: ghostwhite;
+}
+
+.paper_find span {
+ position: relative;
+ z-index: 10;
+ transition: color 0.4s;
+}
+
+.paper_find:hover span {
+ color: black;
+}
+
+.paper_find::before,
+.paper_find::after {
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ z-index: 0;
+}
+
+.paper_find::before {
+ content: "";
+ background: #000;
+ width: 120%;
+ left: -10%;
+ transform: skew(30deg);
+ transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+}
+
+.paper_find:hover::before {
+ transform: translate3d(100%, 0, 0);
+}
+
+.paper_find:active {
+  transform: scale(0.95);
+}
+
+
+/* 1. The Container */
+.main56 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  
+  /* Forces the cards to start from the left */
+  justify-content: flex-start; 
+  
+  /* Adjust this gap to change spacing between cards */
+  gap: 20px; 
+  
+  /* This width must be large enough to fit 3 cards + gaps */
+  max-width: 1200px; 
+  margin: 40px auto; 
+  padding: 0 20px;
+}
+
+/* 2. The Card Wrapper */
+.main56 > div {
+  /* We force each card to take up exactly 1/3 of the row.
+     The calculation: 100% / 3 minus the total gap space divided by 3.
+  */
+  flex: 0 0 calc(33.333% - 14px); 
+  
+  min-width: 300px; /* Adjust this based on your Card's actual width */
+  box-sizing: border-box;
+}
+
+/* 3. Responsive Fixes */
+
+/* Tablet: If 3 cards are too cramped, go to 2 per row */
+@media (max-width: 1050px) {
   .main56 {
-    gap: 15px;
+    max-width: 800px; /* Limit container width for 2 cards */
+  }
+  .main56 > div {
+    flex: 0 0 calc(50% - 10px);
+  }
+}
+
+/* Mobile: Single column */
+@media (max-width: 650px) {
+  .main56 {
+    justify-content: center; /* Center the single card on mobile */
+  }
+  .main56 > div {
+    flex: 0 0 100%;
   }
 }

@@ -8,6 +8,7 @@ import Contribute from "./pages/contribute section/Contribute.jsx";
 import Materials from "./pages/Material Section/Materials.jsx";
 import Papers from "./pages/question papers section/Papers.jsx";
 import QuestionPaper from "./pages/question papers section/QuestionPapers.jsx";
+import Save_Page from "./pages/Saved Pages/Save_Page.jsx";
 export default function App() {
   // Initialize state directly from storage to prevent logout on refresh
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -43,7 +44,7 @@ export default function App() {
             <>
               <Navbar setAuth={handleAuth} />
               <Routes>
-                <Route path="/materials" element={<Materials />} />
+                <Route path="/collections" element={<Save_Page />} />
                 <Route path="/questionpapers" element={<Papers />} />
                 <Route path="/contribute" element={<Contribute />} />
                 <Route path="/questionpapers/:subject" element={<QuestionPaper />} />
