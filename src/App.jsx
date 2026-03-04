@@ -9,6 +9,7 @@ import Materials from "./pages/Material Section/Materials.jsx";
 import Papers from "./pages/question papers section/Papers.jsx";
 import QuestionPaper from "./pages/question papers section/QuestionPapers.jsx";
 import Save_Page from "./pages/Saved Pages/Save_Page.jsx";
+import ProtectedLayout from "./ProtectedLayout.jsx";
 export default function App() {
   // Initialize state directly from storage to prevent logout on refresh
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -31,31 +32,36 @@ export default function App() {
   }, [isAuthenticated]);
 
   return (
-    <Routes>
-      <Route 
-        path="/" 
-        element={!isAuthenticated ? <Login setAuth={handleAuth} /> : <Navigate to="/questionpapers" />} 
-      />
+   <Routes>
+  <Route
+    path="/"
+    element={
+      !isAuthenticated
+        ? <Login setAuth={handleAuth} />
+        : <Navigate to="/questionpapers" />
+    }
+  />
 
-      {isAuthenticated ? (
-        <Route
-          path="/*"
-          element={
-            <>
-              <Navbar setAuth={handleAuth} />
-              <Routes>
-                <Route path="/collections" element={<Save_Page />} />
-                <Route path="/questionpapers" element={<Papers />} />
-                <Route path="/contribute" element={<Contribute />} />
-                <Route path="/questionpapers/:subject" element={<QuestionPaper />} />
-                <Route path="*" element={<Navigate to="/questionpapers" />} />
-              </Routes>
-            </>
-          }
-        />
-      ) : (
-        <Route path="*" element={<Navigate to="/" />} />
-      )}
-    </Routes>
+  {/* Protected Routes */}
+  {isAuthenticated ? (
+    <Route
+      path="/*"
+      element={
+        <ProtectedLayout>
+          <Navbar setAuth={handleAuth} />
+          <Routes>
+            <Route path="/collections" element={<Save_Page />} />
+            <Route path="/questionpapers" element={<Papers />} />
+            <Route path="/contribute" element={<Contribute />} />
+            <Route path="/questionpapers/:subject" element={<QuestionPaper />} />
+            <Route path="*" element={<Navigate to="/questionpapers" />} />
+          </Routes>
+        </ProtectedLayout>
+      }
+    />
+  ) : (
+    <Route path="*" element={<Navigate to="/" />} />
+  )}
+</Routes>
   );
 }

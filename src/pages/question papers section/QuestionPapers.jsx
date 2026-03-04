@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import Cookies from "js-cookie";
-import styled from 'styled-components'; // Added styled-components
+import styled from 'styled-components';
 import "./QuestionPapers.css";
 import "./Modal.css";
 import Loader from "../Loading/Loading";
 
-// --- STYLED COMPONENT FOR THE NEW BUTTON ---
 const StyledPlusButton = styled.div`
   .plusButton {
     --plus_sideLength: 1.5rem;
@@ -15,7 +14,6 @@ const StyledPlusButton = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Main body is now White with a Black border */
     border: 1px solid black;
     width: var(--plus_sideLength);
     height: var(--plus_sideLength);
@@ -32,21 +30,18 @@ const StyledPlusButton = styled.div`
     right: 0;
     width: 0;
     height: 0;
-    /* Triangle is now Black */
     border-width: 0 var(--plus_topRightTriangleSideLength) var(--plus_topRightTriangleSideLength) 0;
     border-style: solid;
     border-color: transparent #000000 transparent transparent; 
     transition: all 0.2s ease-in-out;
   }
 
-  /* Expand black background on hover or when saved */
   .plusButton:hover::before,
   .plusButton.is-saved::before {
     --plus_topRightTriangleSideLength: calc(var(--plus_sideLength) * 2);
   }
 
   .plusIcon {
-    /* Icon starts Black */
     fill: #000000;
     width: calc(var(--plus_sideLength) * 0.6);
     height: calc(var(--plus_sideLength) * 0.6);
@@ -54,14 +49,12 @@ const StyledPlusButton = styled.div`
     transition: all 0.2s ease-in-out;
   }
 
-  /* Icon turns White when background becomes Black */
   .plusButton:hover .plusIcon,
   .plusButton.is-saved .plusIcon {
     fill: #ffffff;
     transform: rotate(180deg);
   }
   
-  /* Optional: Change border to lime green if the paper is saved */
   .plusButton.is-saved {
     border-color: #000000; 
   }
@@ -87,6 +80,9 @@ const QuestionPapers = () => {
   const [newColName, setNewColName] = useState("");
 
   const username = Cookies.get("username");
+  
+  // Ref for the scrollable folder row
+  const folderRowRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -119,6 +115,20 @@ const QuestionPapers = () => {
     };
     fetchData();
   }, [subject, username]);
+
+  // Scroll function for arrows
+  const scrollFolders = (direction) => {
+    if (folderRowRef.current) {
+      const { scrollLeft, clientWidth } = folderRowRef.current;
+      const scrollAmount = clientWidth * 0.6; // Scroll 60% of visible width
+      const scrollTo = direction === "left" ? scrollLeft - scrollAmount : scrollLeft + scrollAmount;
+      
+      folderRowRef.current.scrollTo({
+        left: scrollTo,
+        behavior: "smooth"
+      });
+    }
+  };
 
   const handleSaveToCollection = async (colName) => {
     const nameToSave = colName || newColName;
@@ -185,19 +195,30 @@ const QuestionPapers = () => {
     <div className="qp-container">
       <h2 className="qp-title">{subject} Papers</h2>
 
-      <div className="folder-row">
-        {Object.keys(papers).map((year) => (
-          <div 
-            key={year} 
-            className={`folder-item ${activeYear === year ? "active" : ""}`}
-            onClick={() => setActiveYear(year)}
-          >
-            <div className="folder-icon">
-              <img src="https://img.icons8.com/material-rounded/96/folder-invoices.png" alt="folder-icon" className="icon-img" />
+      {/* --- WRAPPER FOR ARROW SLIDER --- */}
+      <div className="slider-wrapper">
+        <button className="scroll-btn left" onClick={() => scrollFolders("left")} aria-label="Scroll Left">
+          &#10094;
+        </button>
+
+        <div className="folder-row" ref={folderRowRef}>
+          {Object.keys(papers).map((year) => (
+            <div 
+              key={year} 
+              className={`folder-item ${activeYear === year ? "active" : ""}`}
+              onClick={() => setActiveYear(year)}
+            >
+              <div className="folder-icon">
+                <img src="https://img.icons8.com/material-rounded/96/folder-invoices.png" alt="folder-icon" className="icon-img" />
+              </div>
+              <div className="folder-text">{year}</div>
             </div>
-            <div className="folder-text">{year}</div>
-          </div>
-        ))}
+          ))}
+        </div>
+
+        <button className="scroll-btn right" onClick={() => scrollFolders("right")} aria-label="Scroll Right">
+          &#10095;
+        </button>
       </div>
 
       <div className="table-section">
@@ -224,7 +245,6 @@ const QuestionPapers = () => {
                 <td>{paper.yearOfStudy}</td>
                 <td>{paper.contributorName || "Anonymous"}</td>
                 <td>
-                  {/* --- REPLACED PIN WITH NEW PLUS BUTTON --- */}
                   <StyledPlusButton onClick={() => togglePin(paper._id)}>
                     <div className={`plusButton ${savedPapers.has(paper._id) ? 'is-saved' : ''}`}>
                       <svg className="plusIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
