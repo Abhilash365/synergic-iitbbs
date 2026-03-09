@@ -87,7 +87,7 @@ const QuestionPapers = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const paperRes = await fetch(`https://synergic-iitbbs-backend.onrender.com/questionpapers/${subject}`);
+        const paperRes = await fetch(`https://synergic-backend.onrender.com/questionpapers/${subject}`);
         const paperData = await paperRes.json();
         
         if (paperData.success) {
@@ -101,7 +101,7 @@ const QuestionPapers = () => {
         }
 
         if (username) {
-          const savedRes = await fetch(`https://synergic-iitbbs-backend.onrender.com/api/saved-papers/${username}`);
+          const savedRes = await fetch(`https://synergic-backend.onrender.com/api/saved-papers/${username}`);
           const savedData = await savedRes.json();
           if (savedData.success) {
             setCollections(savedData.data);
@@ -137,7 +137,7 @@ const QuestionPapers = () => {
     }
 
     try {
-      const res = await fetch(`https://synergic-iitbbs-backend.onrender.com/api/save-paper`, {
+      const res = await fetch(`https://synergic-backend.onrender.com/api/save-paper`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id: username, paper_id: activePaperId, collection_name: nameToSave }),
@@ -155,7 +155,7 @@ const QuestionPapers = () => {
     const col = collections.find(c => c.papers.includes(paperId));
     if (!col) return;
     try {
-      const res = await fetch(`https://synergic-iitbbs-backend.onrender.com/api/unsave-paper`, {
+      const res = await fetch(`https://synergic-backend.onrender.com/api/unsave-paper`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id: username, paper_id: paperId, collection_name: col.collection_name }),

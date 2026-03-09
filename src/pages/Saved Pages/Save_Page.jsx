@@ -16,7 +16,7 @@ const Save_Page = () => {
     const fetchCollections = async () => {
       if (!username) return;
       try {
-        const res = await fetch(`https://synergic-iitbbs-backend.onrender.com/api/saved-papers/${username}`);
+        const res = await fetch(`https://synergic-backend.onrender.com/api/saved-papers/${username}`);
         const data = await res.json();
         if (data.success && data.data.length > 0) {
           setCollections(data.data);
@@ -41,7 +41,7 @@ const Save_Page = () => {
       try {
         const details = await Promise.all(
           activeCollection.papers.map(async (id) => {
-            const res = await fetch(`https://synergic-iitbbs-backend.onrender.com/api/paper-details/${id}`);
+            const res = await fetch(`https://synergic-backend.onrender.com/api/paper-details/${id}`);
             const result = await res.json();
             return result.success ? result.data : null;
           })

@@ -1,154 +1,95 @@
 import React, { useState } from 'react';
-import './Login1.css';
-import { useNavigate } from 'react-router-dom';
-import pen from '../../images/logo.png';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import './Login1.css'; // Reusing your existing CSS for the same design
+import illustration from '../../images/login.png'; 
+import Toast from '../Toast/Toast';
 
-function Signup() {
+function Signup() {  
     const [credentials, setCredentials] = useState({ username: "", password: "", cpassword: "" });
-    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [toast, setToast] = useState(null);
+    const navigate = useNavigate();
+
+    const onChange = (e) => setCredentials({ ...credentials, [e.target.name]: e.target.value });
 
     const handleSubmit = async (e) => {
-        setLoading(true);
         e.preventDefault();
+        setLoading(true);
+
         if (credentials.password !== credentials.cpassword) {
-            alert("Passwords do not match!");
-        } else {
+            setToast({ type: "error", message: "Passwords do not match!" });
+            setLoading(false);
+            return;
+        }
+
+        try {
             const response = await fetch("https://synergic-iitbbs-backend.onrender.com/api/createUser", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username: credentials.username, password: credentials.password })
+                body: JSON.stringify({ 
+                    username: credentials.username, 
+                    password: credentials.password 
+                })
             });
+            
             const json = await response.json();
-            console.log(json);
+            
             if (!json.success) {
-                alert("User already exists, please move to the sign-in page.");
+                setToast({ type: "error", message: "User already exists" });
             } else {
-                navigate("/signin");
+                setToast({ type: "success", message: "Account created! Redirecting to login..." });
+                setTimeout(() => navigate("/"), 2000); // Redirect to login path
             }
-        }
-        setLoading(false);
-    };
-
-    const onChange = (event) => {
-        setCredentials({ ...credentials, [event.target.name]: event.target.value });
-    };
-
-    const handleKeyDown = (event) => {
-        if (event.key === "Enter") {
-            handleSubmit(event);
+        } catch (error) {
+            setToast({ type: "error", message: "Connection failed. Try again." });
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <>
-            {/* <div className='start'>
-                <div className="heading"><img src={pen} alt="Logo" />
-                </div>
-                <div className='middle_input_area'>
-                <div className="signup_text">Signup</div>
-
-                <form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
-                    <div className="input">
-                        <div className="username">
-                            <input
-                                type="text"
-                                className='input_box'
-                                placeholder='Username'
-                                name='username'
-                                value={credentials.username}
-                                onChange={onChange}
-                            />
-                        </div>
-                        <div className="password">
-                            <input
-                                type="password"
-                                className='input_box'
-                                placeholder='Password'
-                                name='password'
-                                value={credentials.password}
-                                onChange={onChange}
-                            />
-                        </div>
-                        <div className="conformPassword">
-                            <input
-                                type="password"
-                                className='input_box'
-                                placeholder='Confirm Password'
-                                name='cpassword'
-                                value={credentials.cpassword}
-                                onChange={onChange}
-                            />
-                        </div>
-                    </div>
-
-                    <button type='submit' className='signup_btn'>Sign up</button>
-                </form>
-                </div>
-
-                <div className="last_text">
-                    <div className='account'>Already have an account?</div>
-                    <div className='signup'><Link to="/signin">Sign in</Link></div>
-                </div>
-            </div> */}
-              <div className="login-container">
-              <div  className="logo" >
-                  <img src={pen} alt="Logo"/>
-                </div>
+        <div className="login-page-wrapper">
+            {toast && <Toast type={toast.type} message={toast.message} onClose={() => setToast(null)} />}
             
-                <div className="login-box">
-                  <h2 className="login-title">Sign Up</h2>
-            
-                  <form className="login-form" onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
-                    <div className="input-wrapper">
-                      <input
-                        type="text"
-                        placeholder="Enter your username"
-                        name="username"
-                        value={credentials.username}
-                        onChange={onChange}
-                        className="login-input"
-                      />
-                    </div>
-                    
-                    <div className="input-wrapper">
-                      <input
-                        type="password"
-                        placeholder="Enter your password"
-                        name="password"
-                        value={credentials.password}
-                        onChange={onChange}
-                        className="login-input"
-                      />
-                    </div>
-                    <div className="input-wrapper">
-                            <input
-                                type="password"
-                                className='login-input'
-                                placeholder='Confirm Password'
-                                name='cpassword'
-                                value={credentials.cpassword}
-                                onChange={onChange}
-                            />
-                        </div>
-            
-                        <button type="submit" className="login-button" disabled={loading}>
-    {loading ? "Signing Up..." : "Sign Up"}
-</button>
-
-                  </form>
-            
-             <div className="forgot-password">
-             <br />
-             <br />
-                                <div className='account'>Already have an account?</div>
-                                <br />
-                                <div className='signup'><Link to="/signin">Sign In</Link></div>
+            <div className="book-container">
+                <div className="illustration-side">
+                    <img src={illustration} alt="Reading Illustration" />
+                </div>
+                <div className="book-side">
+                    <div className="login-card">
+                        <h2 className="welcome-text">Create Account</h2>
+                        
+                        <form onSubmit={handleSubmit} className="auth-form">
+                            <div className="input-group">
+                                <label>Username</label>
+                                <input type="text" name="username" value={credentials.username} onChange={onChange} required />
                             </div>
+
+                            <div className="input-group">
+                                <label>Password</label>
+                                <input type="password" name="password" value={credentials.password} onChange={onChange} required />
+                            </div>
+
+                            {/* Added Confirm Password here */}
+                            <div className="input-group">
+                                <label>Confirm Password</label>
+                                <input type="password" name="cpassword" value={credentials.cpassword} onChange={onChange} required />
+                            </div>
+
+                            <div className="signup-prompt">
+                                <span>Already have an account? </span>
+                                <Link to="/" className="signup-link">Sign in</Link>
+                            </div>
+
+                            {/* Using the styled button for the primary action */}
+                            <button type="submit" className="sign-in-btn" disabled={loading} style={{ marginTop: '10px' }}>
+                                {loading ? "Creating Account..." : "Sign Up"}
+                            </button>
+                        </form>
+                    </div>
                 </div>
-              </div>
-        </>
+            </div>
+        </div>
     );
 }
 

@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import Toast from "../Toast/Toast"; // The imported component
 import "./Contribute.css";
 import contri from "../../images/contribute.png";
-
+import book from "../../images/book.png"; // The imported image for the file drop area
 export default function Contribute() {
     // --- State Management ---
     const [file, setFile] = useState(null);
@@ -34,7 +34,7 @@ export default function Contribute() {
 
         const fetchSubjects = async () => {
             try {
-                const response = await axios.get("https://synergic-iitbbs-backend.onrender.com/api/subjects");
+                const response = await axios.get("https://synergic-backend.onrender.com/api/subjects");
                 setAllSubjects(response.data);
             } catch (error) {
                 console.error("Error fetching subjects:", error);
@@ -78,7 +78,7 @@ export default function Contribute() {
 
         try {
             const response = await axios.post(
-                "https://synergic-iitbbs-backend.onrender.com/upload", 
+                "https://synergic-backend.onrender.com/upload", 
                 formDataToSend, 
                 { headers: { "Content-Type": "multipart/form-data" } }
             );
@@ -115,6 +115,20 @@ export default function Contribute() {
             <div className="main23">
                 <h1 className="heading23">Contribute</h1>
 
+                <input 
+                    list="subject-hints"
+                    name="subject"
+                    placeholder="Search Subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    className="dropdownss"
+                    autoComplete="off"
+                />
+                <datalist id="subject-hints">
+                    {allSubjects.map((subj) => (
+                        <option key={subj._id} value={subj.name}>{subj.code}</option>
+                    ))}
+                </datalist>
                 <select name="year" value={formData.year} onChange={handleChange} className="dropdownss">
                     <option value="">Year of Study</option>
                     {Array.from({ length: 9 }, (_, i) => {
@@ -132,25 +146,21 @@ export default function Contribute() {
                     <option value="Others">Others</option>
                 </select>
 
-                <input 
-                    list="subject-hints"
-                    name="subject"
-                    placeholder="Search Subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    className="dropdownss"
-                    autoComplete="off"
-                />
-                <datalist id="subject-hints">
-                    {allSubjects.map((subj) => (
-                        <option key={subj._id} value={subj.name}>{subj.code}</option>
-                    ))}
-                </datalist>
 
-                <div className="file-drop-area" onClick={() => document.getElementById("fileInput").click()}>
-                    {file ? <p className="file-name">📄 {file.name}</p> : <p>Click to Upload File</p>}
-                    <input id="fileInput" type="file" onChange={handleFileChange} style={{display: 'none'}} />
-                </div>
+<div className="file-drop-area" onClick={() => document.getElementById("fileInput").click()}>
+    {file ? (
+        <div className="drop-zone-content">
+            <img src={book} alt="book" className="custom-book-icon" />
+            <p className="file-name">{file.name}</p>
+        </div>
+    ) : (
+        <div className="drop-zone-content">
+            <img src={book} alt="book" className="custom-book-icon" />
+            <p>Drag your files here</p>
+        </div>
+    )}
+    <input id="fileInput" type="file" onChange={handleFileChange} style={{display: 'none'}} />
+</div>
 
                 <button onClick={handleUpload} className="upload" disabled={isLoading}>
                     {isLoading ? "Uploading..." : "Contribute"}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import './Navbar.css';
@@ -8,16 +8,34 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const burgerRef = useRef(null);
+
+  // --- NEW LOGIC: HIDE NAVBAR ON SPECIFIC PATHS ---
+  const hiddenPaths = ["/ContactUs", "/"]; 
+  if (hiddenPaths.includes(location.pathname)) {
+    return null; // Don't render anything
+  }
+  // -----------------------------------------------
 
   const fullUsername = Cookies.get("username") || "User";
-
   const displayedUsername = fullUsername.length > 12 
     ? fullUsername.substring(0, 12) + "..." 
     : fullUsername;
 
   const handleLogout = () => {
-    Cookies.remove("username"); 
-    navigate("/login"); 
+    Cookies.remove("username");
+    sessionStorage.clear();
+    localStorage.clear();
+    closeMobileMenu();
+    navigate("/login");
+    window.location.reload(); 
+  };
+
+  const closeMobileMenu = () => {
+    if (burgerRef.current) {
+      burgerRef.current.checked = false;
+    }
+    setIsDropdownOpen(false);
   };
 
   const navItems = [
@@ -29,15 +47,26 @@ const Navbar = () => {
   return (
     <nav className="synergic-navbar">
       <div className="nav-logo">
-        <img src={pen} alt="logo" style={{ width: '210px', marginRight: '80px' }} />
-        
+        <Link to="/" onClick={closeMobileMenu}>
+          <img src={pen} alt="logo" />
+        </Link>
       </div>
+
+      <label className="burger" htmlFor="burger">
+        <input type="checkbox" id="burger" ref={burgerRef} />
+        <span></span><span></span><span></span>
+      </label>
 
       <div className="nav-pill-container">
         {navItems.map((item) => {
           const isActive = location.pathname.startsWith(item.path);
           return (
-            <Link key={item.name} to={item.path} className={`nav-item ${isActive ? 'active' : ''}`}>
+            <Link 
+              key={item.name} 
+              to={item.path} 
+              className={`nav-item ${isActive ? 'active' : ''}`}
+              onClick={closeMobileMenu}
+            >
               <img 
                 src={item.icon} 
                 alt={item.name} 
@@ -47,15 +76,9 @@ const Navbar = () => {
             </Link>
           );
         })}
-      
 
-        <div className="profile-select" >
-          
-          <div 
-             className="profile-selected"
-             onClick={() => setIsDropdownOpen(prev => !prev)}
-          >
-
+        <div className="profile-select">
+          <div className="profile-selected" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
             <div className="profile-avatar">
               {fullUsername.charAt(0).toUpperCase()}
             </div>
@@ -66,21 +89,15 @@ const Navbar = () => {
           </div>
 
           <div className={`profile-options ${isDropdownOpen ? 'show' : ''}`}>
-            <div className="profile-option" onClick={() => {navigate("/contact");
-             setIsDropdownOpen(false);
-              }}>
+            <div className="profile-option" onClick={() => { navigate("/ContactUs"); closeMobileMenu(); }}>
               Leave a message
             </div>
-            <div className="profile-option logout" onClick={() => {handleLogout();
-            setIsDropdownOpen(false);
-            }}>
+            <div className="profile-option logout" onClick={handleLogout}>
               Log Out
             </div>
           </div>
-
         </div>
       </div>
-      
     </nav>
   );
 };

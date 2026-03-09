@@ -1,124 +1,192 @@
-/* Login Form Styling */
-.login-container {
-   
+.login-page-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    height: 100vh; /* Full viewport height */
-    margin: 0;
- 
-    background: #f9f6f2;
+    min-height: 100vh;
+    background-color: #fcfcfc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
 }
 
-.login-box {
-   
-    width: 350px;
-    padding: 2rem;
-    border-radius: 10px;
-    background-color: #2d3748;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    color: #f3f4f6;
-    text-align: center;
+/* The Scaling Container */
+/* 850/600 ratio = 1.41 */
+.book-container {
+    position: relative;
+    width: 100%;
+    max-width: 850px; 
+    aspect-ratio: 850 / 600; /* Maintains the Figma proportion */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.login-header {
-    margin-bottom: 1.5rem;
+/* Illustration: Positioned relative to the container size (%) */
+.illustration-side {
+    position: absolute;
+    left: -12%; /* Moves with the container */
+    bottom: -3%;
+    height: 100%; /* Scales with parent height */
+    z-index: 2;
 }
 
-.logo {
-        
-        height: 10rem;
-        display: flex;
-          justify-content: center;
-          align-items: center;
-}
-.logo img {
-    height: 120px;
-    width: auto; /* Maintains aspect ratio */
-    /* margin-left: 25px; */
-  }
-.login-title {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
+.illustration-side img {
+    height: 100%; 
+    width: auto;
+    object-fit: contain;
 }
 
-.login-form {
-   
-   /* background-color: rebeccapurple; */
+/* The side containing the card */
+.book-side {
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
-    /* align-items: center; */
+    z-index: 3;
+    width: 50%; /* Takes up right half of the book area */
+    margin-left: 10%; 
 }
 
-.input-wrapper {
-    margin-bottom: 1rem;
+/* The Login Card: Scales using % but has a max/min width for logic */
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    padding: clamp(15px, 4%, 40px); /* Padding shrinks on smaller screens */
+    border: 1.5px solid #333;
+    border-radius: 20px;
+    background: #FCFCFC;
 }
 
-.login-input {
+.welcome-text {
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: bold;
+    margin-bottom: 5%;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3%;
+}
+
+.input-group label {
+    font-size: clamp(12px, 1.2vw, 14px);
+    color: #888;
+    margin-bottom: 4px;
+}
+
+.input-group input {
+    padding: 10px;
+    border: 1.5px solid #b3b3b3;
+    border-radius: 8px;
+    font-size: clamp(14px, 1.5vw, 16px);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.forgot-link {
+    text-align: right;
+    margin-bottom: 5%;
+}
+
+.forgot-link a {
+    font-size: clamp(11px, 1vw, 13px);
+    color: #4a90e2;
+    text-decoration: none;
+}
+
+.sign-in-btn {
     width: 100%;
     padding: 12px;
-    border-radius: 6px;
-    border: 1px solid #4a5568;
-    background-color: #fbfdf3;
-    color: #2d3748;
-    font-size: 1rem;
-    outline: none;
-}
-
-.login-input:focus {
-    border-color: #a78bfa;
-    box-shadow: 0 0 5px rgba(167, 139, 250, 0.5);
-}
-
-.login-button {
-    /* width: 100%; */
-    padding: 12px;
+    background-color: #C6EB51;
     border: none;
-    border-radius: 6px;
-    background-color: #F4CE14;
-    color: #114A6E;
-    font-size: 1rem;
+    border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s ease;
+    font-size: clamp(14px, 1.5vw, 16px);
+    transition: transform 0.2s;
 }
 
-.login-button:hover {
-    background-color: #eacf49;
+.sign-in-btn:hover { background-color: #b3d644; }
+.sign-in-btn:active { transform: scale(0.98); }
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
 }
 
-.login-footer {
-    margin-top: 1rem;
+.divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #333;
 }
 
-.forgot-password {
-    color: #cbd5e1;
-    font-size: 0.875rem;
+.divider span { padding: 0 10px; font-size: 14px; }
+
+.google-signin-btn {
+    width: 100%;
+    max-width: 400px;
+    height: 45px;
+    margin-top: 10px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: clamp(13px, 1.4vw, 15px);
+}
+
+.google-signin-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+/* --- THE DISAPPEARING LOGIC --- */
+
+@media (max-width: 768px) {
+    /* 1. Hide the illustration entirely */
+    .illustration-side {
+        display: none;
+    }
+
+    /* 2. Remove the aspect-ratio so the div height can be auto */
+    .book-container {
+        aspect-ratio: auto; 
+        max-width: 450px; /* Focus on the card size now */
+    }
+
+    /* 3. Center the card and remove the 50% width/offset */
+    .book-side {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    /* 4. Optional: Remove the "Book" background image if you were using one 
+       to make it look like a standard clean mobile login */
+    .book-container {
+        background-image: none;
+    }
+}
+
+
+
+.signup-prompt {
+    margin: 10px 0 20px 0;
+    font-size: 0.85rem;
+    color: #555;
+    text-align: left;
+}
+
+.signup-link {
+    color: #C6EB51; /* Adjust this to match your brand green */
     text-decoration: none;
+    font-weight: bold;
 }
 
-.signup:hover {
+.signup-link:hover {
     text-decoration: underline;
-}
-
-.signup{
-    font-size: 1.2rem;
-}
-
-.account{
-    text-decoration: none;
-}
-
-.login-button:disabled {
-    background-color: #eacf49; /* Slightly faded */
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-.login-button:disabled::after {
-    content: "⏳"; /* Loading icon */
-    margin-left: 8px;
 }

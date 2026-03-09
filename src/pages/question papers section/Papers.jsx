@@ -28,7 +28,7 @@ function Papers() {
 
     setLoading(true);
     try {
-      const response = await fetch(`https://synergic-iitbbs-backend.onrender.com/subjects/${branch}/${semester}`);
+      const response = await fetch(`https://synergic-backend.onrender.com/subjects/${branch}/${semester}`);
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
       const data = await response.json();
