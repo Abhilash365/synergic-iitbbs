@@ -10,12 +10,11 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const burgerRef = useRef(null);
 
-  // --- NEW LOGIC: HIDE NAVBAR ON SPECIFIC PATHS ---
-  const hiddenPaths = ["/ContactUs", "/"]; 
+  // --- HIDE NAVBAR ON SPECIFIC PATHS ---
+  const hiddenPaths = ["/ContactUs", "/", "/signup"]; 
   if (hiddenPaths.includes(location.pathname)) {
-    return null; // Don't render anything
+    return null;
   }
-  // -----------------------------------------------
 
   const fullUsername = Cookies.get("username") || "User";
   const displayedUsername = fullUsername.length > 12 
@@ -27,7 +26,7 @@ const Navbar = () => {
     sessionStorage.clear();
     localStorage.clear();
     closeMobileMenu();
-    navigate("/login");
+    navigate("/");
     window.location.reload(); 
   };
 
@@ -47,35 +46,46 @@ const Navbar = () => {
   return (
     <nav className="synergic-navbar">
       <div className="nav-logo">
-        <Link to="/" onClick={closeMobileMenu}>
+        <Link to="/questionpapers" onClick={closeMobileMenu}>
           <img src={pen} alt="logo" />
         </Link>
       </div>
 
-      <label className="burger" htmlFor="burger">
-        <input type="checkbox" id="burger" ref={burgerRef} />
-        <span></span><span></span><span></span>
+      {/* --- NEW BURGER STRUCTURE --- */}
+      <input 
+        type="checkbox" 
+        id="burger-toggle" 
+        ref={burgerRef} 
+        onChange={(e) => !e.target.checked && setIsDropdownOpen(false)}
+      />
+      <label htmlFor="burger-toggle" className="burger-container">
+        <div className="burger-line"></div>
+        <div className="burger-line"></div>
+        <div className="burger-line"></div>
       </label>
 
+      {/* --- NAVIGATION MENU --- */}
       <div className="nav-pill-container">
-        {navItems.map((item) => {
-          const isActive = location.pathname.startsWith(item.path);
-          return (
-            <Link 
-              key={item.name} 
-              to={item.path} 
-              className={`nav-item ${isActive ? 'active' : ''}`}
-              onClick={closeMobileMenu}
-            >
-              <img 
-                src={item.icon} 
-                alt={item.name} 
-                className={`nav-icon ${isActive ? 'icon-dark' : 'icon-light'}`}
-              />
-              <span>{item.name}</span>
-            </Link>
-          );
-        })}
+        <div className="nav-items-wrapper">
+          {navItems.map((item) => {
+            const isActive = location.pathname.startsWith(item.path);
+            return (
+              <Link 
+                key={item.name} 
+                to={item.path} 
+                className={`nav-item ${isActive ? 'active' : ''}`}
+                onClick={closeMobileMenu}
+              >
+                <img 
+                  src={item.icon} 
+                  alt={item.name} 
+                  className={`nav-icon ${isActive ? 'icon-dark' : 'icon-light'}`}
+                />
+                <span>{item.name}</span>
+              </Link>
+            );
+          })}
+        </div>
 
         <div className="profile-select">
           <div className="profile-selected" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
@@ -98,6 +108,9 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      
+      {/* Overlay to close menu when clicking outside */}
+      <div className="menu-overlay" onClick={closeMobileMenu}></div>
     </nav>
   );
 };

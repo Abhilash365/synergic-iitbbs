@@ -1,64 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import Cookies from "js-cookie";
-import styled from 'styled-components';
+// Removed styled-components import
 import "./QuestionPapers.css";
 import "./Modal.css";
 import Loader from "../Loading/Loading";
-
-const StyledPlusButton = styled.div`
-  .plusButton {
-    --plus_sideLength: 1.5rem;
-    --plus_topRightTriangleSideLength: 0.8rem;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid black;
-    width: var(--plus_sideLength);
-    height: var(--plus_sideLength);
-    background-color: #ffffff; 
-    overflow: hidden;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .plusButton::before {
-    position: absolute;
-    content: "";
-    top: 0;
-    right: 0;
-    width: 0;
-    height: 0;
-    border-width: 0 var(--plus_topRightTriangleSideLength) var(--plus_topRightTriangleSideLength) 0;
-    border-style: solid;
-    border-color: transparent #000000 transparent transparent; 
-    transition: all 0.2s ease-in-out;
-  }
-
-  .plusButton:hover::before,
-  .plusButton.is-saved::before {
-    --plus_topRightTriangleSideLength: calc(var(--plus_sideLength) * 2);
-  }
-
-  .plusIcon {
-    fill: #000000;
-    width: calc(var(--plus_sideLength) * 0.6);
-    height: calc(var(--plus_sideLength) * 0.6);
-    z-index: 1;
-    transition: all 0.2s ease-in-out;
-  }
-
-  .plusButton:hover .plusIcon,
-  .plusButton.is-saved .plusIcon {
-    fill: #ffffff;
-    transform: rotate(180deg);
-  }
-  
-  .plusButton.is-saved {
-    border-color: #000000; 
-  }
-`;
 
 const QuestionPapers = () => {
   const { subject } = useParams();
@@ -80,8 +26,6 @@ const QuestionPapers = () => {
   const [newColName, setNewColName] = useState("");
 
   const username = Cookies.get("username");
-  
-  // Ref for the scrollable folder row
   const folderRowRef = useRef(null);
 
   useEffect(() => {
@@ -116,11 +60,10 @@ const QuestionPapers = () => {
     fetchData();
   }, [subject, username]);
 
-  // Scroll function for arrows
   const scrollFolders = (direction) => {
     if (folderRowRef.current) {
       const { scrollLeft, clientWidth } = folderRowRef.current;
-      const scrollAmount = clientWidth * 0.6; // Scroll 60% of visible width
+      const scrollAmount = clientWidth * 0.6;
       const scrollTo = direction === "left" ? scrollLeft - scrollAmount : scrollLeft + scrollAmount;
       
       folderRowRef.current.scrollTo({
@@ -195,7 +138,6 @@ const QuestionPapers = () => {
     <div className="qp-container">
       <h2 className="qp-title">{subject} Papers</h2>
 
-      {/* --- WRAPPER FOR ARROW SLIDER --- */}
       <div className="slider-wrapper">
         <button className="scroll-btn left" onClick={() => scrollFolders("left")} aria-label="Scroll Left">
           &#10094;
@@ -245,13 +187,13 @@ const QuestionPapers = () => {
                 <td>{paper.yearOfStudy}</td>
                 <td>{paper.contributorName || "Anonymous"}</td>
                 <td>
-                  <StyledPlusButton onClick={() => togglePin(paper._id)}>
+                  <div className="plus-button-container" onClick={() => togglePin(paper._id)}>
                     <div className={`plusButton ${savedPapers.has(paper._id) ? 'is-saved' : ''}`}>
                       <svg className="plusIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
                         <path d="M13.75 23.75V16.25H6.25V13.75H13.75V6.25H16.25V13.75H23.75V16.25H16.25V23.75H13.75Z" />
                       </svg>
                     </div>
-                  </StyledPlusButton>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -277,7 +219,7 @@ const QuestionPapers = () => {
             </div>
             <div className="modal-footer">
               <button className="create-new-btn" onClick={() => { setShowMainModal(false); setShowCreateModal(true); }}>+ Create new</button>
-              <button className="btn-primary" disabled={!selectedColName} onClick={() => handleSaveToCollection(selectedColName)}>Save</button>
+              <button className="modal-save-button" disabled={!selectedColName} onClick={() => handleSaveToCollection(selectedColName)}>Save</button>
             </div>
           </div>
         </div>

@@ -320,3 +320,60 @@ body {
 .left{
   margin-right:10px;
 }
+
+
+.plus-button-container {
+    display: inline-block;
+}
+
+.plusButton {
+    --plus_sideLength: 1.5rem;
+    --plus_topRightTriangleSideLength: 0.8rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    width: var(--plus_sideLength);
+    height: var(--plus_sideLength);
+    background-color: #ffffff; 
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.plusButton::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-width: 0 var(--plus_topRightTriangleSideLength) var(--plus_topRightTriangleSideLength) 0;
+    border-style: solid;
+    border-color: transparent #000000 transparent transparent; 
+    transition: all 0.2s ease-in-out;
+}
+
+.plusButton:hover::before,
+.plusButton.is-saved::before {
+    --plus_topRightTriangleSideLength: calc(var(--plus_sideLength) * 2);
+}
+
+.plusIcon {
+    fill: #000000;
+    width: calc(var(--plus_sideLength) * 0.6);
+    height: calc(var(--plus_sideLength) * 0.6);
+    z-index: 1;
+    transition: all 0.2s ease-in-out;
+}
+
+.plusButton:hover .plusIcon,
+.plusButton.is-saved .plusIcon {
+    fill: #ffffff;
+    transform: rotate(180deg);
+}
+
+.plusButton.is-saved {
+    border-color: #000000; 
+}
